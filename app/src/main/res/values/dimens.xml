@@ -1,0 +1,26 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="fragment_horizontal_margin">16dp</dimen>
+    <dimen name="fragment_vertical_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="appbar_padding">16dp</dimen>
+    <dimen name="fab_margin">25dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="text_field_height">60dp</dimen>
+    <dimen name="text_field_width_normal">150dp</dimen>
+    <dimen name="text_field_width_long">275dp</dimen>
+    <dimen name="menu_bar_corner_radius">8dp</dimen>
+    <dimen name="text_inside_cardlview_margin">15dp</dimen>
+    <dimen name="home_cardview_width">180dp</dimen>
+    <dimen name="home_cardview_height">120dp</dimen>
+    <dimen name="addms_card_view_width">150dp</dimen>
+    <dimen name="addms_cardview_height">100dp</dimen>
+    <dimen name="corner_radius">8dp</dimen>
+    <dimen name="home_title_padding">7dp</dimen>
+    <dimen name="user_item_height">40dp</dimen>
+    <dimen name="user_item_textSize">20sp</dimen>
+    <dimen name="user_item_buttonSize">70dp</dimen>
+
+</resources>

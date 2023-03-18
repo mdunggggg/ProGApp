@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imageTopic"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            />
+
+        <TextView
+            android:id="@+id/nameTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:layout_toEndOf="@id/imageTopic"
+            android:text="Name Topic"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/describeTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameTopic"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@id/imageTopic"
+            android:text="Describe your topic"
+            android:textSize="16dp" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

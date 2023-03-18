@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Model.Card$PlayActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_items"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_alignParentTop="true"
+
+
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rcv_items"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:src="@android:drawable/ic_input_add" />
+    <RelativeLayout
+        android:id="@+id/frameLayout_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="100dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+
+            >
+        </FrameLayout>
+        <Button
+            android:id="@+id/eraseBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:text="Erase" />
+        <Button
+            android:id="@+id/speakBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/eraseBar"
+            android:layout_alignParentEnd="true"
+            android:text="Speak" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

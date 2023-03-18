@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".Model.AddActivity$MainActivity">
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="290dp"
+        android:onClick="btnLogin_OnClick"
+        android:text="Let's go"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageProPtitView" />
+
+    <ImageView
+        android:id="@+id/imageProPtitView"
+        android:layout_width="287dp"
+        android:layout_height="316dp"
+        android:layout_marginTop="173dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/proptit" />
+
+    <ImageButton
+        android:id="@+id/githubButton"
+        android:layout_width="@dimen/user_item_buttonSize"
+        android:layout_height="@dimen/user_item_buttonSize"
+        android:layout_marginStart="176dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/white"
+        android:cropToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_github"
+        app:tint="?attr/colorOnSecondary" />
+
+    <ImageButton
+        android:id="@+id/fbButton"
+        android:layout_width="@dimen/user_item_buttonSize"
+        android:layout_height="@dimen/user_item_buttonSize"
+        android:layout_marginEnd="92dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/white"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_facebook" />
+
+    <ImageButton
+        android:id="@+id/proptitButton"
+        android:layout_width="@dimen/user_item_buttonSize"
+        android:layout_height="@dimen/user_item_buttonSize"
+        android:layout_marginStart="104dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/white"
+        android:padding="12dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_proptit" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
