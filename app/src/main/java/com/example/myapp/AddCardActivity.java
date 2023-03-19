@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.myapp.Database.CardDatabase;
 import com.example.myapp.Model.Card;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
@@ -43,8 +44,11 @@ public class AddCardActivity extends AppCompatActivity {
 
         buttonSaveCard.setOnClickListener(v -> {
             Intent intent = new Intent();
-            Card card = new Card(etNameCard.getText().toString(), imageCardPath);
-            intent.putExtra("data", (Serializable) card);
+            Card card = new Card(etNameCard.getText().toString(), imageCardPath, null);
+          //  intent.putExtra("data", (Serializable) card);
+            long id = CardDatabase.getInstance(AddCardActivity.this).cardDAO().insertCardReturnId(card);
+            intent.putExtra("id", id);
+            System.out.println("ID before: " + id);
             setResult(RESULT_OK, intent);
            AddCardActivity.super.onBackPressed();
         });

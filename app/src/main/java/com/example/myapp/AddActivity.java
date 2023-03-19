@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.myapp.Controller.CONSTANT;
+import com.example.myapp.Database.TopicDatabase;
 import com.example.myapp.Model.Topic;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
@@ -50,8 +51,9 @@ public class AddActivity extends AppCompatActivity {
 
         btnSave.setOnClickListener(v -> {
             Intent intent = new Intent();
-            Topic topic = new Topic(etNameTopic.getText().toString(), etDescribeTopic.getText().toString(), imageTopicPath);
+            Topic topic = new Topic(etNameTopic.getText().toString(), etDescribeTopic.getText().toString(), imageTopicPath, null);
             intent.putExtra("data", (Serializable) topic);
+            TopicDatabase.getInstance(AddActivity.this).topicDAO().insertTopic(topic);
             setResult(CONSTANT.RESULT_ADD_TOPIC, intent);
             AddActivity.super.onBackPressed();
 

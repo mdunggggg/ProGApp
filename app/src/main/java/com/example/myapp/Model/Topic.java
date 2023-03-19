@@ -1,32 +1,35 @@
 package com.example.myapp.Model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity(tableName = "topic")
 public class Topic implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String nameTopic;
     private String describeTopic;
     private String imageTopic;
     private Integer idImage;
-    private List<Card> cards;
+    private List<Integer> cards;
 
-    public Topic(String nameTopic,String describeTopic,  String imageTopic) {
+    public Topic(String nameTopic,String describeTopic,  String imageTopic, Integer idImage) {
         this.nameTopic = nameTopic;
         this.imageTopic = imageTopic;
         this.describeTopic = describeTopic;
-        this.idImage = null;
+        this.idImage = idImage;
         if(cards == null) cards = new ArrayList<>();
     }
 
+    public int getId() {
+        return id;
+    }
 
-
-    public Topic(String nameTopic, String describeTopic, Integer idImage) {
-        this.nameTopic = nameTopic;
-        this.idImage = idImage;
-        this.describeTopic = describeTopic;
-        this.imageTopic = null;
-        if(cards == null) cards = new ArrayList<>();
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescribeTopic() {
@@ -60,14 +63,14 @@ public class Topic implements Serializable {
         this.idImage = idImage;
     }
 
-    public List<Card> getCards() {
+    public List<Integer> getCards() {
         return cards;
     }
 
-    public void setCards(List<Card> cards) {
+    public void setCards(List<Integer> cards) {
         this.cards = cards;
     }
-    public void addCard(Card card){
+    public void addCard(Integer card){
         this.cards.add(card);
     }
 }

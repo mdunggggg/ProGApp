@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/bottom_sheet_layout"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="45dp"
+    android:orientation="vertical"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFCC33"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tvSentenceBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sentence Bar"
+            android:textSize="35dp"
+            android:textStyle="bold"
+            android:layout_marginStart="15dp"
+            android:layout_alignParentStart="true"
+            />
+        <ImageButton
+            android:id="@+id/btnBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/baseline_keyboard_arrow_up_24"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="100dp"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:background="#FFFFCC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <FrameLayout
+            android:layout_gravity="center_vertical"
+            android:id="@+id/fragment_container"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+        >
+        </FrameLayout>
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/speakBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Speak" />
+            <Button
+                android:id="@+id/eraseBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Erase" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

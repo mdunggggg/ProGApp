@@ -16,14 +16,19 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.myapp.Adapter.CardAdapter;
 import com.example.myapp.Controller.CONSTANT;
 import com.example.myapp.Controller.RecyclerItemClickListener;
+import com.example.myapp.Database.CardDatabase;
+import com.example.myapp.Database.TopicDatabase;
 import com.example.myapp.Model.Card;
 import com.example.myapp.Model.Topic;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
@@ -39,21 +44,35 @@ public class ShowTopicActivity extends AppCompatActivity {
 
     private FloatingActionButton btnAddCard;
     private BarFragment barFragment;
-    private List<Card> cardTopic;
+    private List<Integer> cardTopic;
     private List<Card> cardBar;
     private Button eraseCardBar;
     private Button speakCardBar;
     private int position;
 
     private TextToSpeech textToSpeech;
+
+    // Bottom Sheet
+    private Button useBottomSheet;
+    private LinearLayout layoutBottomSheet;
+    private BottomSheetBehavior bottomSheetBehavior;
+    private ImageButton btnBar;
+    private Boolean stateBar;
+    private Topic topic;
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK) {
                     //Toast.makeText(PlayActivity.this, "You clicked " + result.getData().getStringExtra("data"), Toast.LENGTH_LONG).show();
                     Intent intent = result.getData();
-                    Card card = (Card) intent.getSerializableExtra("data");
-                    cardTopic.add(card);
-                    cardAdapter.setData(cardTopic);
+                  //  Card card = (Card) intent.getSerializableExtra("data");
+                   // cardTopic.add(card);
+                   // cardAdapter.setData(cardTopic);
+                    long id = intent.getLongExtra("id", 0);
+                    System.out.println("ID after: " + id);
+                    topic.addCard((int) id);
+                    TopicDatabase.getInstance(this).topicDAO().updateTopic(topic);
+                    setData();
+
                 }
             });
 
@@ -64,9 +83,7 @@ public class ShowTopicActivity extends AppCompatActivity {
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
             bundle.putSerializable("Bar List Card", (Serializable) cardBar);
-            bundle.putSerializable("Topic List Card", (Serializable) cardTopic);
-            bundle.putInt("Position", position);
-            //intent.putExtra("data", (Serializable) barFragment.getCardBar());
+            bundle.putBoolean("State Bar", stateBar);
             intent.putExtras(bundle);
             setResult(CONSTANT.SHOW_CARD_ACTIVITY, intent);
             finish();
@@ -76,17 +93,46 @@ public class ShowTopicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_topic);
-
         getOnBackPressedDispatcher().addCallback(this, backPressedCallback);
+
+        // Receive data from PlayActivity
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        position = bundle.getInt("Position");
+        // position = bundle.getInt("Position");
+        topic = (Topic) bundle.getSerializable("Topic");
         cardBar = (List<Card>) bundle.getSerializable("Bar List Card");
-        cardTopic = (List<Card>) bundle.getSerializable("Topic List Card");
+        cardTopic = topic.getCards();
+        stateBar = bundle.getBoolean("State Bar");
+        // Bottom Sheet
+
+        layoutBottomSheet = findViewById(R.id.bottom_sheet_layout);
+        btnBar = findViewById(R.id.btnBar);
+        bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        changeStateBar();
+        btnBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_down_24);
+                    stateBar = true;
+                } else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_up_24);
+                    stateBar = false;
+                }
+            }
+        });
 
 
-        recyclerView = findViewById(R.id.rcv_cards);
+
+
+
+
+        // Set adapter for RecyclerView
+
+        recyclerView = findViewById(R.id.rcv_items);
         cardAdapter = new CardAdapter(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -97,9 +143,10 @@ public class ShowTopicActivity extends AppCompatActivity {
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Toast.makeText(ShowTopicActivity.this, "You clicked " + cardTopic.get(position).getNameCard(), Toast.LENGTH_LONG).show();
-                        speak(cardTopic.get(position).getNameCard());
-                        barFragment.add(cardTopic.get(position));
+                        Card card = CardDatabase.getInstance(ShowTopicActivity.this).cardDAO().getCardById(cardTopic.get(position));
+                        Toast.makeText(ShowTopicActivity.this, "You clicked " + card.getNameCard(), Toast.LENGTH_LONG).show();
+                        speak(card.getNameCard());
+                        barFragment.add(card);
                     }
                     @Override
                     public void onLongItemClick(View view, int position) {
@@ -125,14 +172,13 @@ public class ShowTopicActivity extends AppCompatActivity {
 
 
         // Fragment
-        frameCardLayout_container = findViewById(R.id.frameCardLayout_container);
         fragmentCard_container = findViewById(R.id.fragment_container);
         barFragment = new BarFragment(cardBar);
         replaceFragment(barFragment);
 
 
         // Add Card
-        btnAddCard = findViewById(R.id.btnAddCard);
+        btnAddCard = findViewById(R.id.addButton);
         btnAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,7 +188,7 @@ public class ShowTopicActivity extends AppCompatActivity {
         });
 
         // Erase Card
-        eraseCardBar = findViewById(R.id.eraseCardBar);
+        eraseCardBar = findViewById(R.id.eraseBar);
         eraseCardBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +197,7 @@ public class ShowTopicActivity extends AppCompatActivity {
         });
 
         // Speak Card
-        speakCardBar = findViewById(R.id.speakCardBar);
+        speakCardBar = findViewById(R.id.speakBar);
         speakCardBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,8 +214,28 @@ public class ShowTopicActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+
+    public void changeStateBar() {
+        if (stateBar) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_down_24);
+
+        } else {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_up_24);
+        }
+    }
+
     public void speak(String sentence) {
         textToSpeech.speak(sentence, TextToSpeech.QUEUE_FLUSH, null, null);
     }
+    public void setData(){
+        if(cardAdapter == null)
+            return;
+        cardTopic = topic.getCards();
+        cardAdapter.setData(cardTopic);
+    }
+
+
 
 }

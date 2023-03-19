@@ -6,12 +6,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Model.Card$PlayActivity">
+   >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_items"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="500dp"
         android:layout_alignParentTop="true"
 
 
@@ -21,16 +21,13 @@
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/frameLayout_container"
+        android:layout_below="@id/rcv_items"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="50dp"
         android:clickable="true"
         android:src="@android:drawable/ic_input_add" />
-
-
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/frameLayout_container"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         >
@@ -41,22 +38,26 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="100dp"
-            android:layout_gravity="left|bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+
             >
         </FrameLayout>
         <Button
             android:id="@+id/eraseBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:text="Button" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:text="Erase" />
         <Button
             android:id="@+id/speakBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|top"
-            android:text="Button" />
-    </FrameLayout>
+            android:layout_above="@id/eraseBar"
+            android:layout_alignParentEnd="true"
+            android:text="Speak" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

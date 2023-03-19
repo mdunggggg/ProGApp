@@ -90,11 +90,11 @@ public class BarFragment extends Fragment{
     }
     private void dataInitialize(){
         cardsBar = new ArrayList<>();
-        cardsBar.add(new Card("Happy", R.drawable.happy));
-        cardsBar.add(new Card("Sport", R.drawable.sports));
-        cardsBar.add(new Card("Scared", R.drawable.scared));
-        cardsBar.add(new Card("Pasta", R.drawable.pasta));
-        cardsBar.add(new Card("Basketball", R.drawable.basketball));
-        cardsBar.add(new Card("Orange juice", R.drawable.orange_juice));
+        cardsBar.add(new Card("Happy", null, R.drawable.happy));
+        cardsBar.add(new Card("Sport", null,R.drawable.sports));
+        cardsBar.add(new Card("Scared",null, R.drawable.scared));
+        cardsBar.add(new Card("Pasta",null, R.drawable.pasta));
+        cardsBar.add(new Card("Basketball",null, R.drawable.basketball));
+        cardsBar.add(new Card("Orange juice",null, R.drawable.orange_juice));
     }
 }

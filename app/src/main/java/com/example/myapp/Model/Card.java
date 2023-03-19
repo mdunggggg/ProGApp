@@ -1,27 +1,31 @@
 package com.example.myapp.Model;
 
-import java.io.Serializable;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+@Entity(tableName = "card")
 public class Card implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String nameCard;
 
     private String imageCard;
     private Integer idImage;
 
-    public Card(String nameCard,  String imageCard) {
+    public Card(String nameCard,  String imageCard, Integer idImage) {
         this.nameCard = nameCard;
         this.imageCard = imageCard;
-        this.idImage = null;
-    }
-
-
-
-    public Card(String nameCard, Integer idImage) {
-        this.nameCard = nameCard;
         this.idImage = idImage;
-        this.imageCard = null;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNameCard() {
         return nameCard;
