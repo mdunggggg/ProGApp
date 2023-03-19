@@ -2,7 +2,9 @@ package com.example.myapp;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,13 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -26,6 +33,7 @@ import com.example.myapp.Controller.CONSTANT;
 import com.example.myapp.Controller.RecyclerItemClickListener;
 import com.example.myapp.Model.Card;
 import com.example.myapp.Model.Topic;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
@@ -41,11 +49,25 @@ public class PlayActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
     private RecyclerView recyclerView;
     private FloatingActionButton btnAdd;
-    private RelativeLayout frameLayout_container;
+    private LinearLayout frameLayout_container;
     private FrameLayout fragment_container;
     private Button eraseBar;
     private Button speakBar;
     private BarFragment barFragment;
+
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+
+
+    // Bottom Sheet
+    private Button useBottomSheet;
+    private LinearLayout layoutBottomSheet;
+    private BottomSheetBehavior bottomSheetBehavior;
+    private ImageButton btnBar;
+    private Boolean stateBar;
+
+
+
     // ActivityResultLauncher: get information from child activity to parent activity
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -60,7 +82,9 @@ public class PlayActivity extends AppCompatActivity {
             Bundle bundle = intent.getExtras();
             List<Card>cards = (List<Card>) intent.getSerializableExtra("Bar List Card");
             barFragment.setCardBar((List<Card>) intent.getSerializableExtra("Bar List Card"));
+            stateBar = bundle.getBoolean("State Bar");
             topics.get(bundle.getInt("Position")).setCards((List<Card>) intent.getSerializableExtra("Topic List Card"));
+            changeStateBar();
         }
     });
 
@@ -69,7 +93,38 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
-        frameLayout_container = findViewById(R.id.frameLayout_container);
+        // Bottom Sheet
+        stateBar = false;
+        layoutBottomSheet = findViewById(R.id.bottom_sheet_layout);
+        btnBar = findViewById(R.id.btnBar);
+        bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        btnBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_down_24);
+                    stateBar = true;
+
+                } else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_up_24);
+                    stateBar = false;
+                }
+            }
+        });
+
+
+        // Navigation Drawer
+        drawerLayout = findViewById(R.id.activity_main_drawer);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(drawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+
+        // Fragment for card bar
+
         fragment_container = findViewById(R.id.fragment_container);
         barFragment = new BarFragment();
         replaceFragment(barFragment);
@@ -145,7 +200,35 @@ public class PlayActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main_actions, menu);
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+      //  Toast.makeText(this, "HAHHAHA", Toast.LENGTH_SHORT).show();
+
+
+        return super.onOptionsItemSelected(item);
+    }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -162,6 +245,7 @@ public class PlayActivity extends AppCompatActivity {
         Intent intent = new Intent(PlayActivity.this, ShowTopicActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("Position", position);
+        bundle.putBoolean("State Bar", stateBar);
         bundle.putSerializable("Bar List Card", (Serializable) barFragment.getCardBar());
         bundle.putSerializable("Topic List Card", (Serializable) cards);
         intent.putExtras(bundle);
@@ -170,6 +254,15 @@ public class PlayActivity extends AppCompatActivity {
 
     public void speak(String sentence) {
         textToSpeech.speak(sentence, TextToSpeech.QUEUE_FLUSH, null, null);
+    }
+    public void changeStateBar() {
+        if (stateBar) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_down_24);
+        } else {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_up_24);
+        }
     }
 
     public void dataInitialize() {

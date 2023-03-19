@@ -16,6 +16,8 @@ import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import com.example.myapp.Controller.CONSTANT;
 import com.example.myapp.Controller.RecyclerItemClickListener;
 import com.example.myapp.Model.Card;
 import com.example.myapp.Model.Topic;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
@@ -46,6 +49,13 @@ public class ShowTopicActivity extends AppCompatActivity {
     private int position;
 
     private TextToSpeech textToSpeech;
+
+    // Bottom Sheet
+    private Button useBottomSheet;
+    private LinearLayout layoutBottomSheet;
+    private BottomSheetBehavior bottomSheetBehavior;
+    private ImageButton btnBar;
+    private Boolean stateBar;
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK) {
@@ -66,6 +76,7 @@ public class ShowTopicActivity extends AppCompatActivity {
             bundle.putSerializable("Bar List Card", (Serializable) cardBar);
             bundle.putSerializable("Topic List Card", (Serializable) cardTopic);
             bundle.putInt("Position", position);
+            bundle.putBoolean("State Bar", stateBar);
             //intent.putExtra("data", (Serializable) barFragment.getCardBar());
             intent.putExtras(bundle);
             setResult(CONSTANT.SHOW_CARD_ACTIVITY, intent);
@@ -76,17 +87,46 @@ public class ShowTopicActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_topic);
-
         getOnBackPressedDispatcher().addCallback(this, backPressedCallback);
+
+        // Receive data from PlayActivity
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         position = bundle.getInt("Position");
         cardBar = (List<Card>) bundle.getSerializable("Bar List Card");
         cardTopic = (List<Card>) bundle.getSerializable("Topic List Card");
+        stateBar = bundle.getBoolean("State Bar");
+
+        // Bottom Sheet
+
+        layoutBottomSheet = findViewById(R.id.bottom_sheet_layout);
+        btnBar = findViewById(R.id.btnBar);
+        bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        changeStateBar();
+        btnBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_down_24);
+                    stateBar = true;
+                } else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_up_24);
+                    stateBar = false;
+                }
+            }
+        });
 
 
-        recyclerView = findViewById(R.id.rcv_cards);
+
+
+
+
+        // Set adapter for RecyclerView
+
+        recyclerView = findViewById(R.id.rcv_items);
         cardAdapter = new CardAdapter(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -125,14 +165,13 @@ public class ShowTopicActivity extends AppCompatActivity {
 
 
         // Fragment
-        frameCardLayout_container = findViewById(R.id.frameCardLayout_container);
         fragmentCard_container = findViewById(R.id.fragment_container);
         barFragment = new BarFragment(cardBar);
         replaceFragment(barFragment);
 
 
         // Add Card
-        btnAddCard = findViewById(R.id.btnAddCard);
+        btnAddCard = findViewById(R.id.addButton);
         btnAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,7 +181,7 @@ public class ShowTopicActivity extends AppCompatActivity {
         });
 
         // Erase Card
-        eraseCardBar = findViewById(R.id.eraseCardBar);
+        eraseCardBar = findViewById(R.id.eraseBar);
         eraseCardBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +190,7 @@ public class ShowTopicActivity extends AppCompatActivity {
         });
 
         // Speak Card
-        speakCardBar = findViewById(R.id.speakCardBar);
+        speakCardBar = findViewById(R.id.speakBar);
         speakCardBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +205,18 @@ public class ShowTopicActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
+    }
+
+
+    public void changeStateBar() {
+        if (stateBar) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_down_24);
+
+        } else {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            btnBar.setImageResource(R.drawable.baseline_keyboard_arrow_up_24);
+        }
     }
 
     public void speak(String sentence) {

@@ -47,4 +47,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
 
     implementation 'com.github.dhaval2404:imagepicker:2.1'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:28.0.0'
+
 }
