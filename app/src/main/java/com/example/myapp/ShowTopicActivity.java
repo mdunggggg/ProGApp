@@ -62,11 +62,7 @@ public class ShowTopicActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK) {
-                    //Toast.makeText(PlayActivity.this, "You clicked " + result.getData().getStringExtra("data"), Toast.LENGTH_LONG).show();
                     Intent intent = result.getData();
-                  //  Card card = (Card) intent.getSerializableExtra("data");
-                   // cardTopic.add(card);
-                   // cardAdapter.setData(cardTopic);
                     long id = intent.getLongExtra("id", 0);
                     System.out.println("ID after: " + id);
                     topic.addCard((int) id);
