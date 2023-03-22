@@ -24,4 +24,6 @@ public interface TopicDAO {
     Topic getTopicById(int id);
     @Update
     void updateTopic(Topic topic);
+    @Query("SELECT * FROM topic WHERE nameTopic LIKE '%' || :name || '%'")
+    List<Topic>searchTopic(String name);
 }

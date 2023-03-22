@@ -41,7 +41,7 @@ public class ShowCard extends AppCompatActivity {
             imgCard.setImageResource(card.getIdImage());
         }
         else{
-           // imgCard.setImageBitmap(BitmapFactory.decodeFile(card.getImageCard()));
+            imgCard.setImageBitmap(BitmapFactory.decodeFile(card.getImageCard()));
         }
 
 

@@ -5,6 +5,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.example.myapp.Model.Card;
+import com.example.myapp.Model.Topic;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface CardDAO {
     void deleteAllCard();
     @Insert
     long insertCardReturnId(Card card);
+    @Query("SELECT * FROM card WHERE nameCard LIKE '%' || :name || '%'")
+    List<Card>searchCard(String name);
 }

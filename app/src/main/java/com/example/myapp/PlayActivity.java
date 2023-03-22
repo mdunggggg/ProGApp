@@ -19,14 +19,18 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapp.Adapter.TopicAdapter;
@@ -69,6 +73,9 @@ public class PlayActivity extends AppCompatActivity {
     private BottomSheetBehavior bottomSheetBehavior;
     private ImageButton btnBar;
     private Boolean stateBar;
+
+    // Seartch
+    private EditText etSearch;
 
 
 
@@ -208,7 +215,22 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
+
+
+        // Search
+
+        etSearch = findViewById(R.id.etSearch);
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchTopic();
+                }
+                return false;
+            }
+        });
     }
+
 
 
     @Override
@@ -339,6 +361,15 @@ public class PlayActivity extends AppCompatActivity {
     void update(Topic topic){
         TopicDatabase.getInstance(getApplicationContext()).topicDAO().updateTopic(topic);
         setDataTopic();
+    }
+
+
+    private void searchTopic() {
+        String search = etSearch.getText().toString().trim();
+        topics.clear();
+        topics = TopicDatabase.getInstance(getApplicationContext()).topicDAO().searchTopic(search);
+        topicAdapter.setData(topics);
+
     }
 
 

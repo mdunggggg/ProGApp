@@ -13,12 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapp.Adapter.CardAdapter;
@@ -59,6 +63,7 @@ public class ShowTopicActivity extends AppCompatActivity {
     private ImageButton btnBar;
     private Boolean stateBar;
     private Topic topic;
+    private EditText etSearch;
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK) {
@@ -73,7 +78,6 @@ public class ShowTopicActivity extends AppCompatActivity {
             });
 
     OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
-
         @Override
         public void handleOnBackPressed() {
             Intent intent = new Intent();
@@ -206,6 +210,20 @@ public class ShowTopicActivity extends AppCompatActivity {
                 barFragment.speak();
             }
         });
+
+
+        // Search Card
+
+        etSearch = findViewById(R.id.etSearch);
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchCard();
+                }
+                return false;
+            }
+        });
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -245,5 +263,20 @@ public class ShowTopicActivity extends AppCompatActivity {
         intent.putExtras(bundle);
         activityResultLauncher.launch(intent);
     }
+    private void searchCard() {
+        String search = etSearch.getText().toString().trim();
+        if(search.equals("")){
+            setData();
+            return;
+        }
+        List<Card> cards = CardDatabase.getInstance(this).cardDAO().searchCard(search);
+        List<Integer> cardInteger = new ArrayList<>();
+        for(int i = 0 ; i < cards.size(); i++){
+            cardInteger.add(cards.get(i).getId());
+        }
+        cardAdapter.setData(cardInteger);
+
+    }
+
 
 }

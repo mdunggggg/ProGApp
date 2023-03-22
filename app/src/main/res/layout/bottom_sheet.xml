@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_edge"
-
         android:orientation="horizontal">
         <TextView
             android:id="@+id/tvSentenceBar"
@@ -22,7 +21,8 @@
             android:text="Sentence Bar"
             android:textSize="35dp"
             android:textStyle="bold"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
+            android:textColor="@color/black"
             android:layout_alignParentStart="true"
             />
         <ImageButton
@@ -41,40 +41,49 @@
         android:background="#FFFFCC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="horizontal">
         <FrameLayout
             android:layout_gravity="center_vertical"
             android:id="@+id/fragment_container"
             android:layout_width="280dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
         </FrameLayout>
         <LinearLayout
-
+            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
 
+            android:orientation="vertical">
             <ImageButton
                 android:id="@+id/speakBar"
+                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/transparent"
                 android:src="@drawable/speakbutton"
+                android:background="@android:color/transparent"
                 android:text="Speak" />
-
             <ImageButton
                 android:id="@+id/eraseBar"
-                android:src="@drawable/delete"
-                android:background="@android:color/transparent"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/delete"
                 android:text="Erase" />
         </LinearLayout>
     </LinearLayout>
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:background="@drawable/search_bottom_sheet"
+        android:textStyle="bold"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:hint="Search"/>
 
 </LinearLayout>
