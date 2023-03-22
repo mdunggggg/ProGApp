@@ -46,8 +46,8 @@ public class ShowTopicActivity extends AppCompatActivity {
     private BarFragment barFragment;
     private List<Integer> cardTopic;
     private List<Card> cardBar;
-    private Button eraseCardBar;
-    private Button speakCardBar;
+    private ImageButton eraseCardBar;
+    private ImageButton speakCardBar;
     private int position;
 
     private TextToSpeech textToSpeech;
@@ -62,11 +62,7 @@ public class ShowTopicActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK) {
-                    //Toast.makeText(PlayActivity.this, "You clicked " + result.getData().getStringExtra("data"), Toast.LENGTH_LONG).show();
                     Intent intent = result.getData();
-                  //  Card card = (Card) intent.getSerializableExtra("data");
-                   // cardTopic.add(card);
-                   // cardAdapter.setData(cardTopic);
                     long id = intent.getLongExtra("id", 0);
                     System.out.println("ID after: " + id);
                     topic.addCard((int) id);
@@ -145,8 +141,14 @@ public class ShowTopicActivity extends AppCompatActivity {
                     public void onItemClick(View view, int position) {
                         Card card = CardDatabase.getInstance(ShowTopicActivity.this).cardDAO().getCardById(cardTopic.get(position));
                         Toast.makeText(ShowTopicActivity.this, "You clicked " + card.getNameCard(), Toast.LENGTH_LONG).show();
-                        speak(card.getNameCard());
-                        barFragment.add(card);
+                        if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED){
+                            speak(card.getNameCard());
+                            barFragment.add(card);
+                        }
+                        else{
+                            goToShowCard(card);
+                        }
+
                     }
                     @Override
                     public void onLongItemClick(View view, int position) {
@@ -236,6 +238,12 @@ public class ShowTopicActivity extends AppCompatActivity {
         cardAdapter.setData(cardTopic);
     }
 
-
+    public void goToShowCard(Card card){
+        Intent intent = new Intent(ShowTopicActivity.this, ShowCard.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Card", card);
+        intent.putExtras(bundle);
+        activityResultLauncher.launch(intent);
+    }
 
 }

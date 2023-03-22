@@ -55,8 +55,8 @@ public class PlayActivity extends AppCompatActivity {
     private FloatingActionButton btnAdd;
     private LinearLayout frameLayout_container;
     private FrameLayout fragment_container;
-    private Button eraseBar;
-    private Button speakBar;
+    private ImageButton eraseBar;
+    private ImageButton speakBar;
     private BarFragment barFragment;
 
     private DrawerLayout drawerLayout;
