@@ -74,10 +74,7 @@ public class EditCard extends AppCompatActivity {
         imageViewCard.setImageURI(uri);
         imageCardPath = uri.getPath();
     }
-    public void updateCard(){
-        card.setNameCard(etEditNameCard.getText().toString());
-        card.setImageCard(imageCardPath);
-        CardDatabase.getInstance(EditCard.this).cardDAO().updateCard(card);
-    }
+
+
 
 }
