@@ -80,6 +80,7 @@ public class ShowTopicActivity extends AppCompatActivity {
     OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
         @Override
         public void handleOnBackPressed() {
+
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
             bundle.putSerializable("Bar List Card", (Serializable) cardBar);
