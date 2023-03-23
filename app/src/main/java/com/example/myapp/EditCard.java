@@ -45,6 +45,7 @@ public class EditCard extends AppCompatActivity {
             imageViewCard.setImageResource(card.getIdImage());
         }
         else{
+            imageCardPath = card.getImageCard();
             imageViewCard.setImageBitmap(BitmapFactory.decodeFile(card.getImageCard()));
         }
 

@@ -72,6 +72,8 @@ public class ShowCard extends AppCompatActivity {
     }
     public void setData(){
         tvCard.setText(card.getNameCard());
+        if(card.getImageCard() == null && card.getIdImage() == null)
+            return;
         if(card.getImageCard() == null){
             imgCard.setImageResource(card.getIdImage());
         }

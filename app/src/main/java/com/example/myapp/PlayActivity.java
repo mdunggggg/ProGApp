@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Database;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -24,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -369,7 +371,15 @@ public class PlayActivity extends AppCompatActivity {
         topics.clear();
         topics = TopicDatabase.getInstance(getApplicationContext()).topicDAO().searchTopic(search);
         topicAdapter.setData(topics);
-
+        hideKeyboard();
+    }
+    public void hideKeyboard(){
+        try{
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
 
