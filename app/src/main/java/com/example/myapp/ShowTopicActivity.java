@@ -66,14 +66,15 @@ public class ShowTopicActivity extends AppCompatActivity {
     private EditText etSearch;
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == RESULT_OK) {
+                if (result.getResultCode() == CONSTANT.RESULT_ADD_CARD) {
                     Intent intent = result.getData();
                     long id = intent.getLongExtra("id", 0);
-                    System.out.println("ID after: " + id);
                     topic.addCard((int) id);
                     TopicDatabase.getInstance(this).topicDAO().updateTopic(topic);
                     setData();
-
+                }
+                else if(result.getResultCode() == CONSTANT.RESULT_SHOW_CARD){
+                    setData();
                 }
             });
 

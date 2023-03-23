@@ -3,6 +3,7 @@ package com.example.myapp.Database;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.myapp.Model.Card;
 import com.example.myapp.Model.Topic;
@@ -23,4 +24,6 @@ public interface CardDAO {
     long insertCardReturnId(Card card);
     @Query("SELECT * FROM card WHERE nameCard LIKE '%' || :name || '%'")
     List<Card>searchCard(String name);
+    @Update
+    void updateCard(Card card);
 }

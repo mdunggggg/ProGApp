@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.myapp.Controller.CONSTANT;
 import com.example.myapp.Database.CardDatabase;
 import com.example.myapp.Model.Card;
 import com.github.dhaval2404.imagepicker.ImagePicker;
@@ -49,7 +50,7 @@ public class AddCardActivity extends AppCompatActivity {
             long id = CardDatabase.getInstance(AddCardActivity.this).cardDAO().insertCardReturnId(card);
             intent.putExtra("id", id);
             System.out.println("ID before: " + id);
-            setResult(RESULT_OK, intent);
+            setResult(CONSTANT.RESULT_ADD_CARD, intent);
            AddCardActivity.super.onBackPressed();
         });
     }
