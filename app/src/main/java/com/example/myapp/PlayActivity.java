@@ -44,6 +44,7 @@ import com.example.myapp.Model.Card;
 import com.example.myapp.Model.Topic;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
@@ -65,7 +66,10 @@ public class PlayActivity extends AppCompatActivity {
     private ImageButton speakBar;
     private BarFragment barFragment;
 
+
+    // Navigation Drawer
     private DrawerLayout drawerLayout;
+    NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
 
 
@@ -76,7 +80,7 @@ public class PlayActivity extends AppCompatActivity {
     private ImageButton btnBar;
     private Boolean stateBar;
 
-    // Seartch
+    // Search
     private EditText etSearch;
 
 
@@ -85,21 +89,15 @@ public class PlayActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == CONSTANT.RESULT_ADD_TOPIC) {
-//            Intent intent = result.getData();
-//            Topic topic = (Topic) intent.getSerializableExtra("data");
-//            topics.add(topic);
-//            topicAdapter.setData(topics);
               setDataTopic();
         }
         else if(result.getResultCode() == CONSTANT.SHOW_CARD_ACTIVITY) {
             Intent intent = result.getData();
             Bundle bundle = intent.getExtras();
-//            List<Card>cards = (List<Card>) intent.getSerializableExtra("Bar List Card");
             barFragment.setCardBar((List<Card>) intent.getSerializableExtra("Bar List Card"));
             stateBar = bundle.getBoolean("State Bar");
-//            topics.get(bundle.getInt("Position")).setCards((List<Card>) intent.getSerializableExtra("Topic List Card"));
-//            changeStateBar();
-                setDataTopic();
+            changeStateBar();
+            setDataTopic();
         }
     });
 
@@ -135,8 +133,10 @@ public class PlayActivity extends AppCompatActivity {
 
         // Navigation Drawer
         drawerLayout = findViewById(R.id.activity_main_drawer);
+        navigationView = findViewById(R.id.nav_view);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -146,7 +146,6 @@ public class PlayActivity extends AppCompatActivity {
         fragment_container = findViewById(R.id.fragment_container);
         barFragment = new BarFragment();
         replaceFragment(barFragment);
-
 
 
         // Original Data
@@ -234,7 +233,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
 
-
+    // Start Navigation
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -247,12 +246,12 @@ public class PlayActivity extends AppCompatActivity {
         drawerToggle.onConfigurationChanged(newConfig);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main_actions, menu);
-//
-//        return super.onCreateOptionsMenu(menu);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -260,10 +259,10 @@ public class PlayActivity extends AppCompatActivity {
             return true;
         }
       //  Toast.makeText(this, "HAHHAHA", Toast.LENGTH_SHORT).show();
-
-
         return super.onOptionsItemSelected(item);
     }
+
+    // End Navigation
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

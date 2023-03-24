@@ -2,6 +2,7 @@ package com.example.myapp;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,7 +21,7 @@ import com.example.myapp.Model.Topic;
 import java.util.List;
 
 public class ShowCard extends AppCompatActivity {
-
+    private ActionBar actionBar;
     private ImageButton btnBack;
     private TextView tvCard;
     private ImageView imgCard;
@@ -41,7 +42,12 @@ public class ShowCard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_card);
 
+        // Set ActionBar
+        actionBar = getSupportActionBar();
+        actionBar.hide();
+
         // Init UI
+
         btnBack = findViewById(R.id.btnBack);
         tvCard = findViewById(R.id.tvCard);
         imgCard = findViewById(R.id.imgCard);

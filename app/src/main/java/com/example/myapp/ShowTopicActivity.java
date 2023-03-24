@@ -3,7 +3,9 @@ package com.example.myapp;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,9 +13,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -41,6 +53,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class ShowTopicActivity extends AppCompatActivity {
+    private ActionBar actionBar;
+    private Drawable drawable;
+    private SpannableString spannableString;
+    private Toolbar toolbar;
     private RecyclerView recyclerView;
     private CardAdapter cardAdapter;
     private RelativeLayout frameCardLayout_container;
@@ -105,6 +121,21 @@ public class ShowTopicActivity extends AppCompatActivity {
         cardBar = (List<Card>) bundle.getSerializable("Bar List Card");
         cardTopic = topic.getCards();
         stateBar = bundle.getBoolean("State Bar");
+
+        // Set action bar
+        actionBar = getSupportActionBar();
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+        spannableString = new SpannableString(topic.getNameTopic());
+        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.black)), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new RelativeSizeSpan(1.5f), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawable = getResources().getDrawable(R.drawable.back_button);
+        getSupportActionBar().setHomeAsUpIndicator(drawable);
+        getSupportActionBar().setTitle(spannableString);
+
+
+
         // Bottom Sheet
 
         layoutBottomSheet = findViewById(R.id.bottom_sheet_layout);
@@ -225,6 +256,19 @@ public class ShowTopicActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void replaceFragment(Fragment fragment) {

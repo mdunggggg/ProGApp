@@ -6,19 +6,18 @@
         android:id="@+id/search"
         android:icon="@drawable/pizza"
         android:title="pizza"
-        app:showAsAction="always" />
+       />
 
     <item
         android:id="@+id/searcha"
         android:icon="@drawable/pizza"
         android:title="pizza"
-        app:showAsAction="always" />
+       />
 
     <item
         android:id="@+id/searchb"
         android:icon="@drawable/pizza"
-        android:title="pizza"
-        app:showAsAction="always" />
+        android:title="pizza" />
 
 
 </menu>

@@ -1,6 +1,7 @@
 package com.example.myapp;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,6 +20,7 @@ import com.github.dhaval2404.imagepicker.ImagePicker;
 
 public class EditCard extends AppCompatActivity {
     private Card card;
+    private ActionBar actionBar;
     private EditText etEditNameCard;
     private ImageView imageViewCard;
     private Button btnSelectImageCard;
@@ -29,6 +31,11 @@ public class EditCard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_card);
+
+        // Set ActionBar
+        actionBar = getSupportActionBar();
+        actionBar.hide();
+
         // Init UI
         etEditNameCard = findViewById(R.id.etEditNameCard);
         imageViewCard = findViewById(R.id.imageViewCard);
