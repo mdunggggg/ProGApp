@@ -2,8 +2,10 @@ package com.example.myapp;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -17,8 +19,16 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -54,7 +64,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class PlayActivity extends AppCompatActivity {
-
+    private ActionBar actionBar;
+    private Drawable drawable;
+    private SpannableString spannableString;
+    private Toolbar toolbar;
     private List<Topic> topics = new ArrayList<>();
     private TopicAdapter topicAdapter;
     private TextToSpeech textToSpeech;
@@ -109,6 +122,17 @@ public class PlayActivity extends AppCompatActivity {
         TopicDatabase.getInstance(this).topicDAO().deleteAllTopic();
         CardDatabase.getInstance(this).cardDAO().deleteAllCard();
 
+        // Toolbar
+//        actionBar = getSupportActionBar();
+//   //     getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+//        spannableString = new SpannableString("PROGAPP");
+//        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        spannableString.setSpan(new RelativeSizeSpan(1.0f), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        spannableString.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        drawable = getResources().getDrawable(R.drawable.menu_button, null);
+
+
         // Bottom Sheet
         stateBar = false;
         layoutBottomSheet = findViewById(R.id.bottom_sheet_layout);
@@ -132,13 +156,23 @@ public class PlayActivity extends AppCompatActivity {
 
 
         // Navigation Drawer
+        actionBar = getSupportActionBar();
+        spannableString = new SpannableString("PROGAPPPP");
+        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new RelativeSizeSpan(1.0f), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.nav_view);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+
+        drawable = getResources().getDrawable(R.drawable.menu_button, null);
+        actionBar.setHomeAsUpIndicator(drawable);
+        actionBar.setTitle(spannableString);
+
 
 
         // Fragment for card bar
