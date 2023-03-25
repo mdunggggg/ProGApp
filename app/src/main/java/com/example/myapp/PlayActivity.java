@@ -32,6 +32,7 @@ import android.text.SpannableString;
 import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -73,6 +74,9 @@ public class PlayActivity extends AppCompatActivity {
     private Boolean isMoving;
     private float xStart;
     private float yStart;
+    private DisplayMetrics displayMetrics;
+    private float screenHeight;
+    private float screenWidth;
     private ActionBar actionBar;
     private Drawable drawable;
     private SpannableString spannableString;
@@ -238,6 +242,10 @@ public class PlayActivity extends AppCompatActivity {
        // Add topic
         btnAdd = findViewById(R.id.addButton);
         isMoving = false;
+        displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenHeight = displayMetrics.heightPixels - 100;
+        screenWidth = displayMetrics.widthPixels;
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -262,8 +270,23 @@ public class PlayActivity extends AppCompatActivity {
                             isMoving = true;
                         }
                         if (isMoving) {
-                            btnAdd.setX(btnAdd.getX() + (xDiff - xStart));
-                            btnAdd.setY(btnAdd.getY() + (yDiff - yStart));
+                            float newX = btnAdd.getX() + (xDiff - xStart);
+                            float newY = btnAdd.getY() + (yDiff - yStart);
+
+                            if (newX < 0) {
+                                newX = 0;
+                            }
+                            if (newX > (screenWidth - btnAdd.getWidth())) {
+                                newX = screenWidth - btnAdd.getWidth();
+                            }
+                            if (newY < 0) {
+                                newY = 0;
+                            }
+                            if (newY > (screenHeight - btnAdd.getHeight())) {
+                                newY = screenHeight - btnAdd.getHeight();
+                            }
+                            btnAdd.setX(newX);
+                            btnAdd.setY(newY);
                         }
                         return true;
                     case MotionEvent.ACTION_UP:
@@ -276,7 +299,6 @@ public class PlayActivity extends AppCompatActivity {
                 }
             }
         });
-
 
 
 

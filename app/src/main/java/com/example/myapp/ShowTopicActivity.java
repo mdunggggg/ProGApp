@@ -25,6 +25,7 @@ import android.text.SpannableString;
 import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -59,6 +60,9 @@ public class ShowTopicActivity extends AppCompatActivity {
     private Boolean isMoving;
     private float xStart;
     private float yStart;
+    private DisplayMetrics displayMetrics;
+    private float screenHeight;
+    private float screenWidth;
     private ActionBar actionBar;
     private Drawable drawable;
     private SpannableString spannableString;
@@ -224,6 +228,10 @@ public class ShowTopicActivity extends AppCompatActivity {
         // Add Card
         btnAddCard = findViewById(R.id.addButton);
         isMoving = false;
+        displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenHeight = displayMetrics.heightPixels - 100;
+        screenWidth = displayMetrics.widthPixels;
         btnAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,8 +254,23 @@ public class ShowTopicActivity extends AppCompatActivity {
                             isMoving = true;
                         }
                         if (isMoving) {
-                            btnAddCard.setX(btnAddCard.getX() + (xDiff - xStart));
-                            btnAddCard.setY(btnAddCard.getY() + (yDiff - yStart));
+                            float newX = btnAddCard.getX() + (xDiff - xStart);
+                            float newY = btnAddCard.getY() + (yDiff - yStart);
+
+                            if (newX < 0) {
+                                newX = 0;
+                            }
+                            if (newX > (screenWidth - btnAddCard.getWidth())) {
+                                newX = screenWidth - btnAddCard.getWidth();
+                            }
+                            if (newY < 0) {
+                                newY = 0;
+                            }
+                            if (newY > (screenHeight - btnAddCard.getHeight())) {
+                                newY = screenHeight - btnAddCard.getHeight();
+                            }
+                            btnAddCard.setX(newX);
+                            btnAddCard.setY(newY);
                         }
                         return true;
                     case MotionEvent.ACTION_UP:
