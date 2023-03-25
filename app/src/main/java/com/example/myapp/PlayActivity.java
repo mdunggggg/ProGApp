@@ -1,5 +1,7 @@
 package com.example.myapp;
 
+import static java.lang.Math.abs;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Database;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -33,6 +36,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -63,7 +67,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import kotlin.Suppress;
+
 public class PlayActivity extends AppCompatActivity {
+    private Boolean isMoving;
+    private float xStart;
+    private float yStart;
     private ActionBar actionBar;
     private Drawable drawable;
     private SpannableString spannableString;
@@ -114,10 +123,13 @@ public class PlayActivity extends AppCompatActivity {
         }
     });
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+
         // Delete Data
         TopicDatabase.getInstance(this).topicDAO().deleteAllTopic();
         CardDatabase.getInstance(this).cardDAO().deleteAllCard();
@@ -225,12 +237,48 @@ public class PlayActivity extends AppCompatActivity {
 
        // Add topic
         btnAdd = findViewById(R.id.addButton);
+        isMoving = false;
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToAddActivity();
+                if(!isMoving)
+                    goToAddActivity();
             }
         });
+
+        btnAdd.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        isMoving = false;
+                        xStart = event.getX();
+                        yStart = event.getY();
+                        return true;
+                    case MotionEvent.ACTION_MOVE:
+                        float xDiff = event.getX();
+                        float yDiff = event.getY();
+                        if (abs(xDiff) > 10 || abs(yDiff) > 10) {
+                            isMoving = true;
+                        }
+                        if (isMoving) {
+                            btnAdd.setX(btnAdd.getX() + (xDiff - xStart));
+                            btnAdd.setY(btnAdd.getY() + (yDiff - yStart));
+                        }
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        if (!isMoving) {
+                            goToAddActivity();
+                        }
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+
+
 
         // Erase Bar;
         eraseBar = findViewById(R.id.eraseBar);

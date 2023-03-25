@@ -1,5 +1,7 @@
 package com.example.myapp;
 
+import static java.lang.Math.abs;
+
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -26,6 +28,7 @@ import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -53,6 +56,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class ShowTopicActivity extends AppCompatActivity {
+    private Boolean isMoving;
+    private float xStart;
+    private float yStart;
     private ActionBar actionBar;
     private Drawable drawable;
     private SpannableString spannableString;
@@ -217,13 +223,45 @@ public class ShowTopicActivity extends AppCompatActivity {
 
         // Add Card
         btnAddCard = findViewById(R.id.addButton);
+        isMoving = false;
         btnAddCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ShowTopicActivity.this, AddCardActivity.class);
-                activityResultLauncher.launch(intent);
+                goToAddCard();
             }
         });
+        btnAddCard.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        isMoving = false;
+                        xStart = event.getX();
+                        yStart = event.getY();
+                        return true;
+                    case MotionEvent.ACTION_MOVE:
+                        float xDiff = event.getX();
+                        float yDiff = event.getY();
+                        if (abs(xDiff) > 10 || abs(yDiff) > 10) {
+                            isMoving = true;
+                        }
+                        if (isMoving) {
+                            btnAddCard.setX(btnAddCard.getX() + (xDiff - xStart));
+                            btnAddCard.setY(btnAddCard.getY() + (yDiff - yStart));
+                        }
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        if (!isMoving) {
+                            goToAddCard();
+                        }
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+
 
         // Erase Card
         eraseCardBar = findViewById(R.id.eraseBar);
@@ -306,6 +344,10 @@ public class ShowTopicActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable("Card", card);
         intent.putExtras(bundle);
+        activityResultLauncher.launch(intent);
+    }
+    public void goToAddCard(){
+        Intent intent = new Intent(ShowTopicActivity.this, AddCardActivity.class);
         activityResultLauncher.launch(intent);
     }
     private void searchCard() {
