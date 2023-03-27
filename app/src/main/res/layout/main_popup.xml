@@ -2,6 +2,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="10dp"
     android:background="@drawable/rounded_corner">
     <TextView
         android:id="@+id/nameTopic"
@@ -18,11 +19,27 @@
         android:layout_height="250dp"
         android:layout_gravity="center_horizontal"/>
 
-    <Button
-        android:id="@+id/popup_close_btn"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Close"/>
+        android:layout_marginTop="25dp"
+        >
+        <ImageButton
+            android:id="@+id/deleteTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/trash_can"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="50dp"
+            android:background="@android:color/transparent"/>
+        <ImageButton
+            android:id="@+id/editTopic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/edit_button"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="50dp"
+            android:background="@android:color/transparent"/>
+    </RelativeLayout>
 
 </LinearLayout>

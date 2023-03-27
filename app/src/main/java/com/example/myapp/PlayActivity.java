@@ -120,6 +120,8 @@ public class PlayActivity extends AppCompatActivity {
     // PopupWindow
    private PopupWindow popupWindow;
    private Animation animation;
+    private LayoutInflater layoutInflater;
+    private View popupView;
 
 
 
@@ -152,6 +154,12 @@ public class PlayActivity extends AppCompatActivity {
 
         // Create PopupWindow
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animation_popup);
+        layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        popupView = layoutInflater.inflate(R.layout.main_popup, null);
+        popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+        popupView.startAnimation(animation);
 
 
 
@@ -221,20 +229,15 @@ public class PlayActivity extends AppCompatActivity {
             }
             @Override
             public void onLongItemClick(View view, int position) {
-                LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = layoutInflater.inflate(R.layout.main_popup, null);
-                popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
-                popupView.startAnimation(animation);
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-                Button closeBtn = popupView.findViewById(R.id.popup_close_btn);
                 ImageView imageView = popupView.findViewById(R.id.imgTopic);
                 TextView textView = popupView.findViewById(R.id.nameTopic);
                 imageView.setImageResource(topics.get(position).getIdImage());
                 textView.setText(topics.get(position).getNameTopic());
-                closeBtn.setOnClickListener(new View.OnClickListener() {
+
+                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
-                    public void onClick(View view) {
+                    public void onDismiss() {
                         popupWindow.dismiss();
                     }
                 });
