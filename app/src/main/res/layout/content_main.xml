@@ -7,24 +7,38 @@
     android:layout_width="match_parent"
     android:padding="10dp"
     android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:background="@drawable/search_bottom_sheet"
+        android:textStyle="bold"
+        android:inputType="text"
+        android:imeOptions="actionSearch"
+        android:hint="Search"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_items"
+        android:layout_below="@id/etSearch"
         android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_height="350dp"
-        android:layout_alignParentTop="true"
-
 
         />
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    <ImageButton
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/rcv_items"
-        android:layout_marginTop="200dp"
-        android:layout_alignParentEnd="true"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="9dp"
         android:clickable="true"
         android:longClickable="true"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@drawable/add_button"
+        android:background="@android:color/transparent"
+        />
 
 </RelativeLayout>

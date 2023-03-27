@@ -72,7 +72,7 @@ public class ShowTopicActivity extends AppCompatActivity {
     private RelativeLayout frameCardLayout_container;
     private FrameLayout fragmentCard_container;
 
-    private FloatingActionButton btnAddCard;
+    private ImageButton btnAddCard;
     private BarFragment barFragment;
     private List<Integer> cardTopic;
     private List<Card> cardBar;

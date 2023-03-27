@@ -22,6 +22,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -34,18 +35,25 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,7 +93,7 @@ public class PlayActivity extends AppCompatActivity {
     private TopicAdapter topicAdapter;
     private TextToSpeech textToSpeech;
     private RecyclerView recyclerView;
-    private FloatingActionButton btnAdd;
+    private ImageButton btnAdd;
     private LinearLayout frameLayout_container;
     private FrameLayout fragment_container;
     private ImageButton eraseBar;
@@ -108,6 +116,10 @@ public class PlayActivity extends AppCompatActivity {
 
     // Search
     private EditText etSearch;
+
+    // PopupWindow
+   private PopupWindow popupWindow;
+   private Animation animation;
 
 
 
@@ -138,15 +150,10 @@ public class PlayActivity extends AppCompatActivity {
         TopicDatabase.getInstance(this).topicDAO().deleteAllTopic();
         CardDatabase.getInstance(this).cardDAO().deleteAllCard();
 
-        // Toolbar
-//        actionBar = getSupportActionBar();
-//   //     getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
-//        spannableString = new SpannableString("PROGAPP");
-//        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        spannableString.setSpan(new RelativeSizeSpan(1.0f), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        spannableString.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-//        drawable = getResources().getDrawable(R.drawable.menu_button, null);
+        // Create PopupWindow
+        animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animation_popup);
+
+
 
 
         // Bottom Sheet
@@ -214,7 +221,23 @@ public class PlayActivity extends AppCompatActivity {
             }
             @Override
             public void onLongItemClick(View view, int position) {
-
+                LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = layoutInflater.inflate(R.layout.main_popup, null);
+                popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+                popupView.startAnimation(animation);
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                Button closeBtn = popupView.findViewById(R.id.popup_close_btn);
+                ImageView imageView = popupView.findViewById(R.id.imgTopic);
+                TextView textView = popupView.findViewById(R.id.nameTopic);
+                imageView.setImageResource(topics.get(position).getIdImage());
+                textView.setText(topics.get(position).getNameTopic());
+                closeBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        popupWindow.dismiss();
+                    }
+                });
             }
         }));
         topicAdapter = new TopicAdapter(getApplicationContext());
@@ -255,6 +278,7 @@ public class PlayActivity extends AppCompatActivity {
         });
 
         btnAdd.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -408,6 +432,7 @@ public class PlayActivity extends AppCompatActivity {
         topics = TopicDatabase.getInstance(getApplicationContext()).topicDAO().getlistTopic();
         topicAdapter.setData(topics);
     }
+
     public void dataInitialize() {
         List<Card> cards = new ArrayList<>();
 

@@ -21,6 +21,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
     private Context mContext;
     private List<Topic> topics;
 
+
     public TopicAdapter(Context mContext) {
         this.mContext = mContext;
     }
