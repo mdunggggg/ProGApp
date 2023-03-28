@@ -1,64 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- Tiêu đề -->
-    <TextView
-        android:id="@+id/textViewTitleCard"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Edit Card"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
 
-    <!-- Tên chủ đề -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Card Name" />
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/textViewTitleCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Edit Card"
+            android:textStyle="bold"
+            android:textSize="36dp"
+            android:textColor="#205AA7"/>
 
-    <EditText
-        android:id="@+id/etEditNameCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="Enter card name" />
+        <!-- Tên chủ đề -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#205AA7"
+            android:text="Card Name" />
 
-    <!-- Hình ảnh -->
-    <TextView
+        <EditText
+            android:id="@+id/etEditNameCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="Enter card name" />
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Card Image" />
+        <!-- Hình ảnh -->
+        <TextView
 
-    <Button
-        android:id="@+id/btnSelectImageCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Select Card" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#205AA7"
+            android:text="Card Image" />
 
-    <!-- Miêu tả -->
-    <ImageView
-        android:id="@+id/imageViewCard"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_launcher_background" />
+        <Button
+            android:id="@+id/btnSelectImageCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Select Card" />
 
-    <Button
-        android:id="@+id/btnSaveCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="Save" />
+        <!-- Miêu tả -->
+        <ImageView
+            android:id="@+id/imageViewCard"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/image" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnSaveCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:text="Save" />
+
+    </LinearLayout>
+</ScrollView>

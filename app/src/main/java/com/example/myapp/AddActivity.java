@@ -1,6 +1,7 @@
 package com.example.myapp;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -27,10 +28,14 @@ public class AddActivity extends AppCompatActivity {
     private Button btnSelectImage;
     private String imageTopicPath;
     private int idImage;
+    private ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        actionBar = getSupportActionBar();
+        actionBar.hide();
 
         btnSave = findViewById(R.id.btnSave);
         etNameTopic = findViewById(R.id.etNameTopic);

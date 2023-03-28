@@ -1,6 +1,7 @@
 package com.example.myapp;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -24,11 +25,15 @@ public class AddCardActivity extends AppCompatActivity {
     private ImageView imageCard;
     private String imageCardPath;
     private int idImage;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_card);
+
+        actionBar = getSupportActionBar();
+        actionBar.hide();
 
         buttonSaveCard = findViewById(R.id.btnSaveCard);
         etNameCard = findViewById(R.id.etNameCard);

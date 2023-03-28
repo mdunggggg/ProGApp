@@ -1,82 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- Tiêu đề -->
-    <TextView
-        android:id="@+id/textViewTitle"
+    <!-- Thêm layout của bạn vào đây -->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="EDIT TOPIC"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
 
-    <!-- Tên chủ đề -->
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Topic Name" />
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Edit Topic"
+            android:textStyle="bold"
+            android:textSize="36dp"
+            android:textColor="#205AA7" />
 
-    <EditText
-        android:id="@+id/etNameTopic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="Enter topic name" />
+        <!-- Tên chủ đề -->
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#205AA7"
+            android:text="Topic Name" />
 
-    <!-- Hình ảnh -->
-    <TextView
-        android:id="@+id/textViewImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Topic Image" />
+        <EditText
+            android:id="@+id/etNameTopic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="Enter topic name" />
 
-    <Button
-        android:id="@+id/btnEditImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Select Image" />
+        <!-- Hình ảnh -->
+        <TextView
+            android:id="@+id/textViewImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#205AA7"
+            android:text="Topic Image" />
 
-    <!-- Miêu tả -->
-    <ImageView
-        android:id="@+id/editViewTopic"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_margin="16dp"
-        android:scaleType="fitCenter"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_launcher_background" />
+        <Button
+            android:id="@+id/btnEditImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Select Image" />
 
-    <TextView
-        android:id="@+id/editDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Topic Description" />
+        <!-- Miêu tả -->
+        <ImageView
+            android:id="@+id/editViewTopic"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_margin="16dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/image" />
 
-    <EditText
-        android:id="@+id/editDescribeTopic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="Enter topic description"
-        android:inputType="textMultiLine"
-        android:minLines="3"
-        android:maxLines="5" />
+        <TextView
+            android:id="@+id/editDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#205AA7"
+            android:text="Topic Description" />
 
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="Save" />
+        <EditText
+            android:id="@+id/editDescribeTopic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="Enter topic description"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:maxLines="5" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:text="Save" />
+
+    </LinearLayout>
+
+</ScrollView>

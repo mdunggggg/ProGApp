@@ -446,7 +446,6 @@ public class ShowTopicActivity extends AppCompatActivity {
             cardInteger.add(cards.get(i).getId());
         }
         cardAdapter.setData(cardInteger);
-
     }
 
 

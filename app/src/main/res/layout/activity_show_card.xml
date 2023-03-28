@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#99ccff"
     tools:context=".ShowCard">
 
     <LinearLayout
@@ -25,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="50dp"
-            android:textSize="30dp"
+            android:textSize="36dp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:gravity="center" />
@@ -44,6 +45,8 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginTop="175dp"
+        android:padding="25dp"
+        android:background="@drawable/rounded_corner"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>
