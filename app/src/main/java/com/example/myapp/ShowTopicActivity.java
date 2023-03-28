@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -28,15 +29,21 @@ import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,6 +97,11 @@ public class ShowTopicActivity extends AppCompatActivity {
     private Boolean stateBar;
     private Topic topic;
     private EditText etSearch;
+    // PopupWindow
+    private PopupWindow popupWindow;
+    private Animation animation;
+    private LayoutInflater layoutInflater;
+    private View popupView;
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == CONSTANT.RESULT_ADD_CARD) {
@@ -100,6 +112,9 @@ public class ShowTopicActivity extends AppCompatActivity {
                     setData();
                 }
                 else if(result.getResultCode() == CONSTANT.RESULT_SHOW_CARD){
+                    setData();
+                }
+                else if(result.getResultCode() == CONSTANT.RESULT_EDIT_CARD){
                     setData();
                 }
             });
@@ -143,6 +158,15 @@ public class ShowTopicActivity extends AppCompatActivity {
         drawable = getResources().getDrawable(R.drawable.back_button);
         getSupportActionBar().setHomeAsUpIndicator(drawable);
         getSupportActionBar().setTitle(spannableString);
+
+        // PopupWindow
+        animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animation_popup);
+        layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        popupView = layoutInflater.inflate(R.layout.main_popup, null);
+        popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+        popupView.startAnimation(animation);
 
 
 
@@ -198,7 +222,44 @@ public class ShowTopicActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onLongItemClick(View view, int position) {
+                        Card card = CardDatabase.getInstance(ShowTopicActivity.this).cardDAO().getCardById(cardTopic.get(position));
+                        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                        ImageView imageView = popupView.findViewById(R.id.imgTopic);
+                        TextView textView = popupView.findViewById(R.id.nameTopic);
+                        if(card.getIdImage() != null)
+                            imageView.setImageResource(card.getIdImage());
+                        else
+                            imageView.setImageBitmap(BitmapFactory.decodeFile(card.getImageCard()));
+                        textView.setText(card.getNameCard());
+                        ImageButton delete = popupView.findViewById(R.id.deleteTopic);
+                        delete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                topic.removeCard(card.getId());
+                                TopicDatabase.getInstance(ShowTopicActivity.this).topicDAO().updateTopic(topic);
+                                setData();
+                                popupWindow.dismiss();
+                            }
+                        });
 
+                        ImageButton edit = popupView.findViewById(R.id.editTopic);
+                        edit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intentEdit = new Intent(ShowTopicActivity.this, EditCard.class);
+                                Bundle bundleEdit = new Bundle();
+                                bundleEdit.putSerializable("Card", card);
+                                intentEdit.putExtras(bundleEdit);
+                                activityResultLauncher.launch(intentEdit);
+                                popupWindow.dismiss();
+                            }
+                        });
+                        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                            @Override
+                            public void onDismiss() {
+                                popupWindow.dismiss();
+                            }
+                        });
                     }
                 }));
 

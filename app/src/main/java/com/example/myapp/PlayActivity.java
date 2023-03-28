@@ -22,6 +22,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -139,6 +140,9 @@ public class PlayActivity extends AppCompatActivity {
             changeStateBar();
             setDataTopic();
         }
+        else if(result.getResultCode() == CONSTANT.RESULT_EDIT_TOPIC){
+            setDataTopic();
+        }
     });
 
 
@@ -232,9 +236,31 @@ public class PlayActivity extends AppCompatActivity {
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
                 ImageView imageView = popupView.findViewById(R.id.imgTopic);
                 TextView textView = popupView.findViewById(R.id.nameTopic);
-                imageView.setImageResource(topics.get(position).getIdImage());
+                if(topics.get(position).getIdImage() != null)
+                    imageView.setImageResource(topics.get(position).getIdImage());
+                else
+                    imageView.setImageBitmap(BitmapFactory.decodeFile(topics.get(position).getImageTopic()));
                 textView.setText(topics.get(position).getNameTopic());
+                ImageButton delete = popupView.findViewById(R.id.deleteTopic);
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TopicDatabase.getInstance(getApplicationContext()).topicDAO().deleteTopic(topics.get(position));
+                        setDataTopic();
+                        popupWindow.dismiss();
+                    }
+                });
 
+                ImageButton edit = popupView.findViewById(R.id.editTopic);
+                edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), EditTopicActivity.class);
+                        intent.putExtra("Topic", topics.get(position));
+                        activityResultLauncher.launch(intent);
+                        popupWindow.dismiss();
+                    }
+                });
                 popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {

@@ -26,6 +26,9 @@
         android:theme="@style/Theme.MyApp"
         tools:targetApi="31">
         <activity
+            android:name=".EditTopicActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditCard"
             android:exported="false" />
         <activity

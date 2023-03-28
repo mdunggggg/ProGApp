@@ -1,6 +1,7 @@
 package com.example.myapp.Database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -26,4 +27,6 @@ public interface CardDAO {
     List<Card>searchCard(String name);
     @Update
     void updateCard(Card card);
+    @Delete
+    void deleteCard(Card card);
 }

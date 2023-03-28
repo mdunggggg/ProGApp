@@ -73,4 +73,7 @@ public class Topic implements Serializable {
     public void addCard(Integer card){
         this.cards.add(card);
     }
+    public void removeCard(Integer card){
+        this.cards.remove(card);
+    }
 }
