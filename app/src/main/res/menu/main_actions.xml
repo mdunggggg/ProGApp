@@ -3,21 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/vietname"
         android:icon="@drawable/pizza"
-        android:title="pizza"
+        android:title="Tieng Viet"
        />
 
-    <item
-        android:id="@+id/searcha"
-        android:icon="@drawable/pizza"
-        android:title="pizza"
-       />
 
     <item
-        android:id="@+id/searchb"
+        android:id="@+id/englist"
         android:icon="@drawable/pizza"
-        android:title="pizza" />
+        android:title="Tieng Anh" />
 
 
 </menu>

@@ -6,7 +6,7 @@
 
     <string name="play_game">Chơi thôi!!!</string>
     <string name="search">Tìm kiếm</string>
-    <string name="Sentence_bar">Câu</string>
+    <string name="Sentence_bar">Thanh phát âm</string>
 
     <string name="new_topic">Chủ để mới</string>
     <string name="name_topic">Tên chủ đề</string>
@@ -24,4 +24,8 @@
     <string name="image_card">Ảnh thẻ</string>
 
     <string name="edit_card">Chỉnh sửa thẻ</string>
+
+    <string name="name">Tên ứng dụng: LearnTogether</string>
+    <string name="type_app">Thể loại: Giáo dục</string>
+    <string name="language_app">Ngôn ngữ: Tiếng Anh, Tiếng Việt</string>
 </resources>

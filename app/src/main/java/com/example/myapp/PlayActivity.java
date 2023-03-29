@@ -4,10 +4,12 @@ import static java.lang.Math.abs;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -190,23 +192,42 @@ public class PlayActivity extends AppCompatActivity {
         });
 
 
-        // Navigation Drawer
+        // ActionBar
         actionBar = getSupportActionBar();
         spannableString = new SpannableString("PROGAPPPP");
         spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new RelativeSizeSpan(1.0f), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(spannableString);
+
+        // Navigation Drawer
 
         drawerLayout = findViewById(R.id.activity_main_drawer);
         navigationView = findViewById(R.id.nav_view);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        drawable = getResources().getDrawable(R.drawable.menu_button, null);
-        actionBar.setHomeAsUpIndicator(drawable);
-        actionBar.setTitle(spannableString);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.vietname:
+                        Toast.makeText(PlayActivity.this, "Viet Name", Toast.LENGTH_SHORT).show();
+                        changeLanguage("vi");
+                        break;
+                    case R.id.englist:
+                        Toast.makeText(PlayActivity.this, "Englist", Toast.LENGTH_SHORT).show();
+                        changeLanguage("en");
+                        break;
+                }
+                return false;
+            }
+        });
+
+
 
 
 
@@ -391,35 +412,35 @@ public class PlayActivity extends AppCompatActivity {
 
 
     // Start Navigation
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        drawerToggle.syncState();
-    }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_actions, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        Toast.makeText(this, "HAHHAHA", Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
+    }
+
     // End Navigation
+
+
+    // Change Language
+    public void changeLanguage(String languageCode){
+        Locale locale = new Locale(languageCode);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        recreate();
+    }
+
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -464,6 +485,7 @@ public class PlayActivity extends AppCompatActivity {
 
     public void dataInitialize() {
         List<Card> cards = new ArrayList<>();
+
 
         CardDatabase.getInstance(getApplicationContext()).cardDAO().insertCard(new Card("Feelings", null, R.drawable.feelings));
         CardDatabase.getInstance(getApplicationContext()).cardDAO().insertCard(new Card("Feelings", null, R.drawable.feelings));

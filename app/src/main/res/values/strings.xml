@@ -26,4 +26,8 @@
 
     <string name="edit_card">Edit Card</string>
 
+    <string name="name">Name App: LearnTogether</string>
+    <string name="type_app">Type: Education</string>
+    <string name="language_app">Language: English, Vietnamese</string>
+
 </resources>

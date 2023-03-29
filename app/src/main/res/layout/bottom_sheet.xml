@@ -9,7 +9,7 @@
     app:behavior_peekHeight="45dp"
     android:orientation="vertical"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_edge"
@@ -31,10 +31,10 @@
             android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:src="@drawable/baseline_keyboard_arrow_up_24"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="25dp"
             />
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout
