@@ -415,7 +415,7 @@ public class PlayActivity extends AppCompatActivity {
         if(drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-      //  Toast.makeText(this, "HAHHAHA", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "HAHHAHA", Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
     }
 

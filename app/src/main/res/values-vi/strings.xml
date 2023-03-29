@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="play_game">Chơi thôi!!!</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="Sentence_bar">Câu</string>
+
+    <string name="new_topic">Chủ để mới</string>
+    <string name="name_topic">Tên chủ đề</string>
+    <string name="enter_name_topic">Nhập tên chủ đề</string>
+    <string name="image_topic">Ảnh chủ đề</string>
+    <string name="selection_image">Chọn ảnh</string>
+    <string name="topic_describe">Miêu tả chủ đề</string>
+    <string name="enter_description_topic">Nhập mô tả chủ đề</string>
+    <string name="button_save">Lưu</string>
+    <string name="edit_topic">Chỉnh sửa chủ đề</string>
+
+    <string name="new_card">Thẻ mới</string>
+    <string name="name_card">Tên thẻ</string>
+    <string name="enter_name_card">Nhập tên thẻ</string>
+    <string name="image_card">Ảnh thẻ</string>
+
+    <string name="edit_card">Chỉnh sửa thẻ</string>
+</resources>

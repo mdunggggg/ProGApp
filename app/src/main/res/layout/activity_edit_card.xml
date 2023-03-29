@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Edit Card"
+            android:text="@string/edit_card"
             android:textStyle="bold"
             android:textSize="36dp"
             android:textColor="#205AA7"/>
@@ -27,14 +27,14 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="#205AA7"
-            android:text="Card Name" />
+            android:text="@string/name_card" />
 
         <EditText
             android:id="@+id/etEditNameCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="Enter card name" />
+            android:hint="@string/enter_name_card" />
 
         <!-- Hình ảnh -->
         <TextView
@@ -45,14 +45,14 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="#205AA7"
-            android:text="Card Image" />
+            android:text="@string/image_card" />
 
         <Button
             android:id="@+id/btnSelectImageCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Select Card" />
+            android:text="@string/selection_image" />
 
         <!-- Miêu tả -->
         <ImageView
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            android:text="Save" />
+            android:text="@string/button_save" />
 
     </LinearLayout>
 </ScrollView>

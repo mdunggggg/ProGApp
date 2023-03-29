@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="New Topic"
+            android:text="@string/new_topic"
             android:textSize="36sp"
             android:textColor="#205AA7"
             android:textStyle="bold" />
@@ -29,14 +29,14 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="#205AA7"
-            android:text="Topic Name" />
+            android:text="@string/name_topic" />
 
         <EditText
             android:id="@+id/etNameTopic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="Enter topic name" />
+            android:hint="@string/enter_name_topic" />
 
         <!-- Hình ảnh -->
         <TextView
@@ -47,14 +47,14 @@
             android:textSize="20dp"
             android:textColor="#205AA7"
             android:layout_margin="16dp"
-            android:text="Topic Image" />
+            android:text="@string/image_topic" />
 
         <Button
             android:id="@+id/btnSelectImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Select Image" />
+            android:text="@string/selection_image" />
 
         <!-- Miêu tả -->
         <ImageView
@@ -73,14 +73,14 @@
             android:textSize="20dp"
             android:textColor="#205AA7"
             android:layout_margin="16dp"
-            android:text="Topic Description" />
+            android:text="@string/topic_describe" />
 
         <EditText
             android:id="@+id/etDescribeTopic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="Enter topic description"
+            android:hint="@string/enter_description_topic"
             android:inputType="textMultiLine"
             android:minLines="3"
             android:maxLines="5" />
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            android:text="Save" />
+            android:text="@string/button_save" />
 
     </LinearLayout>
 </ScrollView>

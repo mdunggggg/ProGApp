@@ -4,4 +4,26 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <string name="play_game">Let\'s go!!!</string>
+    <string name="search">Search</string>
+    <string name="Sentence_bar">Sentence Bar</string>
+
+    <string name="new_topic">New Topic</string>
+    <string name="name_topic">Name Topic</string>
+    <string name="enter_name_topic">Enter topic name</string>
+    <string name="image_topic">Topic Image</string>
+    <string name="selection_image">Select Image</string>
+    <string name="topic_describe">Topic Description</string>
+    <string name="enter_description_topic">Enter topic description</string>
+    <string name="button_save">Save</string>
+    <string name="edit_topic">Edit Topic</string>
+
+    <string name="new_card">New Card</string>
+    <string name="name_card">Name Card</string>
+    <string name="enter_name_card">Enter card name</string>
+    <string name="image_card">Card Image</string>
+
+    <string name="edit_card">Edit Card</string>
+
 </resources>
