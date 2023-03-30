@@ -12,7 +12,7 @@
         android:layout_marginTop="50dp"
         android:layout_height="300dp"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
-        app:srcCompat="@drawable/proptitt" />
+        app:srcCompat="@drawable/learn_together" />
 
     <Button
         android:id="@+id/btnLogin"

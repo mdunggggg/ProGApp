@@ -1,5 +1,6 @@
 package com.example.myapp;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     ImageButton githubButton, fbButton, proptitBtn;
+    private ActionBar actionBar;
 
 
     @Override
@@ -22,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(TAG, "onCreate: ");
+        actionBar = getSupportActionBar();
+        actionBar.hide();
+
         githubButton = findViewById(R.id.githubButton);
         fbButton = findViewById(R.id.fbButton);
         proptitBtn = findViewById(R.id.proptitButton);

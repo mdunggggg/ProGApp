@@ -60,6 +60,8 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.TopicViewHolder>
         notifyDataSetChanged();
     }
     public void eraseBar(){
+        if(cardsBar.size() == 0)
+            return;
         cardsBar.remove(cardsBar.size()-1);
         notifyDataSetChanged();
     }

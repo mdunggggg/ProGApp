@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MyApp</string>
+    <string name="app_name">LearnTogether</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -28,4 +28,10 @@
     <string name="name">Tên ứng dụng: LearnTogether</string>
     <string name="type_app">Thể loại: Giáo dục</string>
     <string name="language_app">Ngôn ngữ: Tiếng Anh, Tiếng Việt</string>
+
+    <string name="about_app">Đây là sản phẩm đầu tiên của mình và cũng là thành quả trong cuộc thi ProGAPP cho D21 của CLB ProPTIT. Nhận thấy giao tiếp là một kỹ năng quan trọng và đóng vai trò to lớn trong sự phát triển của trẻ em, ứng dụng này được mình thiết kế nhằm hỗ trợ việc học tập cho trẻ em gặp khó khăn trong việc giao tiếp. Ứng dụng này cung cấp một số chức năng đơn giản để giúp trẻ em giao tiếp hiệu quả hơn. Chức năng chính của ứng dụng là lưu trữ các hình ảnh và ký hiệu để trẻ em dễ dàng hiểu và sử dụng. Bạn cũng có thể sử dụng chức năng Thanh Phát Âm để tạo một câu từ chuỗi các hình ảnh được chọn và phát âm nó. Vì đây là sản phẩm đầu tiên của mình nên không tránh khỏi một số lỗi trong quá trình sử dụng, mong mọi người có thể bỏ qua!</string>
+
+    <string name="language">Ngôn ngữ</string>
+    <string name="vietnamese">Tiếng Việt</string>
+    <string name="english">Tiếng Anh</string>
 </resources>

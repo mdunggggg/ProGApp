@@ -194,7 +194,7 @@ public class PlayActivity extends AppCompatActivity {
 
         // ActionBar
         actionBar = getSupportActionBar();
-        spannableString = new SpannableString("PROGAPPPP");
+        spannableString = new SpannableString("LearnTogether");
         spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.white)), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new RelativeSizeSpan(1.0f), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -214,11 +214,11 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.vietname:
+                    case R.id.Vietnamese:
                         Toast.makeText(PlayActivity.this, "Viet Name", Toast.LENGTH_SHORT).show();
                         changeLanguage("vi");
                         break;
-                    case R.id.englist:
+                    case R.id.English:
                         Toast.makeText(PlayActivity.this, "Englist", Toast.LENGTH_SHORT).show();
                         changeLanguage("en");
                         break;

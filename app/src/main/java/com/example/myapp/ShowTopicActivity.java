@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -76,7 +77,7 @@ public class ShowTopicActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private CardAdapter cardAdapter;
-    private RelativeLayout frameCardLayout_container;
+
     private FrameLayout fragmentCard_container;
 
     private ImageButton btnAddCard;
@@ -141,7 +142,6 @@ public class ShowTopicActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        // position = bundle.getInt("Position");
         topic = (Topic) bundle.getSerializable("Topic");
         cardBar = (List<Card>) bundle.getSerializable("Bar List Card");
         cardTopic = topic.getCards();
@@ -149,7 +149,7 @@ public class ShowTopicActivity extends AppCompatActivity {
 
         // Set action bar
         actionBar = getSupportActionBar();
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#99ccff")));
         spannableString = new SpannableString(topic.getNameTopic());
         spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.black)), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new RelativeSizeSpan(1.5f), 0, spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -214,8 +214,10 @@ public class ShowTopicActivity extends AppCompatActivity {
                         if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED){
                             speak(card.getNameCard());
                             barFragment.add(card);
+                            System.out.println(cardBar.size());
                         }
                         else{
+                            speak(card.getNameCard());
                             goToShowCard(card);
                         }
 
@@ -394,7 +396,6 @@ public class ShowTopicActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);

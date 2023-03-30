@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyApp</string>
+    <string name="app_name">LearnTogether</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
@@ -30,4 +30,9 @@
     <string name="type_app">Type: Education</string>
     <string name="language_app">Language: English, Vietnamese</string>
 
+    <string name="about_app">This is my first product and also my achievement in the ProGAPP competition for D21 of the ProPTIT club. Recognizing the importance of communication education for children, I designed this app to support learning for children who have difficulty in communicating. The app provides some simple features to help children communicate more effectively. The main function of the app is to store images and symbols for children to easily understand and use. You can also use the Sentence Bar feature to create a sentence from a sequence of selected images and pronounce it. Since this is my first product, there may be some errors in the usage process, I hope everyone can overlook them!</string>
+
+    <string name="language">Language</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="english">English</string>
 </resources>

@@ -30,7 +30,7 @@ public class BarFragment extends Fragment{
 
 
     public BarFragment() {
-        // Required empty public constructor
+        cardsBar = new ArrayList<>();
     }
     public BarFragment(List<Card>cards){
         this.cardsBar = cards;
@@ -47,14 +47,7 @@ public class BarFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-      //  fakeData();
 
-//        recyclerView = view.findViewById(R.id.rcv_itemsBar);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        recyclerView.setHasFixedSize(true);
-//        BarAdapter adapter = new BarAdapter(getContext());
-//        recyclerView.setAdapter(adapter);
-//        adapter.setData(tocpicBar);
         recyclerView = view.findViewById(R.id.rcv_itemsBar);
         barAdapter = new BarAdapter(getContext());
 
@@ -73,6 +66,7 @@ public class BarFragment extends Fragment{
 
     }
     void add(Card card){
+
         barAdapter.add(card);
     }
     void speak(){

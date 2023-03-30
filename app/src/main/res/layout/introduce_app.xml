@@ -41,7 +41,7 @@
         android:padding="10dp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        android:text="@string/about_app"
     />
 
 
