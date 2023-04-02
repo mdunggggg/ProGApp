@@ -151,8 +151,8 @@ public class PlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
 
 //        // Delete Data
-       // TopicDatabase.getInstance(this).topicDAO().deleteAllTopic();
-      //  CardDatabase.getInstance(this).cardDAO().deleteAllCard();
+        //TopicDatabase.getInstance(this).topicDAO().deleteAllTopic();
+        //CardDatabase.getInstance(this).cardDAO().deleteAllCard();
 
         // Create PopupWindow
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animation_popup);
@@ -249,6 +249,7 @@ public class PlayActivity extends AppCompatActivity {
             @Override
             public void onLongItemClick(View view, int position) {
                 speak(topics.get(position).getNameTopic());
+                popupView.startAnimation(animation);
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
                 ImageView imageView = popupView.findViewById(R.id.imgTopic);
                 TextView textView = popupView.findViewById(R.id.nameTopic);
@@ -337,9 +338,10 @@ public class PlayActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_MOVE:
                         float xDiff = event.getX();
                         float yDiff = event.getY();
-                        if (abs(xDiff) > 10 || abs(yDiff) > 10) {
+                        if (abs(xDiff) > 250 || abs(yDiff) > 250) {
                             isMoving = true;
                         }
+                        System.out.println("Different: " + xDiff + " " + yDiff + " " + isMoving);
                         if (isMoving) {
                             float newX = btnAdd.getX() + (xDiff - xStart);
                             float newY = btnAdd.getY() + (yDiff - yStart);

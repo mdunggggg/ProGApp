@@ -166,7 +166,7 @@ public class ShowTopicActivity extends AppCompatActivity {
         popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
-        popupView.startAnimation(animation);
+
 
 
 
@@ -225,6 +225,7 @@ public class ShowTopicActivity extends AppCompatActivity {
                     public void onLongItemClick(View view, int position) {
                         Card card = CardDatabase.getInstance(ShowTopicActivity.this).cardDAO().getCardById(cardTopic.get(position));
                         speak(card.getNameCard());
+                        popupView.startAnimation(animation);
                         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
                         ImageView imageView = popupView.findViewById(R.id.imgTopic);
                         TextView textView = popupView.findViewById(R.id.nameTopic);
@@ -313,7 +314,7 @@ public class ShowTopicActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_MOVE:
                         float xDiff = event.getX();
                         float yDiff = event.getY();
-                        if (abs(xDiff) > 10 || abs(yDiff) > 10) {
+                        if (abs(xDiff) > 150 || abs(yDiff) > 150) {
                             isMoving = true;
                         }
                         if (isMoving) {
