@@ -2,12 +2,14 @@ package com.example.myapp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +29,6 @@ public class AddActivity extends AppCompatActivity {
     private ImageView imageTopic;
     private Button btnSelectImage;
     private String imageTopicPath;
-    private int idImage;
     private ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +48,38 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ImagePicker.with(AddActivity.this)
-                        .crop()	    			//Crop image(Optional), Check Customization for more option
-                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                        .maxResultSize(300, 300)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .crop()
+                        .compress(1024)
+                        .maxResultSize(300, 300)
                         .start();
             }
         });
 
         btnSave.setOnClickListener(v -> {
+            if(TextUtils.isEmpty(etNameTopic.getText().toString().trim())){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.notification)
+                        .setMessage(R.string.isEmptyName)
+                        .setPositiveButton("OK", null)
+                        .show();
+                return;
+            }
+            if(TextUtils.isEmpty(etDescribeTopic.getText().toString().trim())){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.notification)
+                        .setMessage(R.string.isEmptyDescription)
+                        .setPositiveButton("OK", null)
+                        .show();
+                return;
+            }
             Intent intent = new Intent();
-            Topic topic = new Topic(etNameTopic.getText().toString(), etDescribeTopic.getText().toString(), imageTopicPath, null);
+            Topic topic = null;
+            if(imageTopicPath == null){
+                topic = new Topic(etNameTopic.getText().toString().trim(), etDescribeTopic.getText().toString().trim(), null, R.drawable.image);
+            }
+            else {
+                topic = new Topic(etNameTopic.getText().toString().trim(), etDescribeTopic.getText().toString().trim(), imageTopicPath, null);
+            }
             intent.putExtra("data", (Serializable) topic);
             TopicDatabase.getInstance(AddActivity.this).topicDAO().insertTopic(topic);
             setResult(CONSTANT.RESULT_ADD_TOPIC, intent);

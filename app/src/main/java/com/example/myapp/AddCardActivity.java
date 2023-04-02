@@ -2,11 +2,13 @@ package com.example.myapp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,7 +26,6 @@ public class AddCardActivity extends AppCompatActivity {
     private EditText etNameCard;
     private ImageView imageCard;
     private String imageCardPath;
-    private int idImage;
     private ActionBar actionBar;
 
     @Override
@@ -42,19 +43,31 @@ public class AddCardActivity extends AppCompatActivity {
 
         buttonSelectImageCard.setOnClickListener(v -> {
             ImagePicker.with(AddCardActivity.this)
-                    .crop()	    			//Crop image(Optional), Check Customization for more option
-                    .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                    .maxResultSize(300, 300)	//Final image resolution will be less than 1080 x 1080(Optional)
+                    .crop()
+                    .compress(1024)
+                    .maxResultSize(300, 300)
                     .start();
         });
 
         buttonSaveCard.setOnClickListener(v -> {
+            if(TextUtils.isEmpty(etNameCard.getText().toString().trim())){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.notification)
+                        .setMessage(R.string.isEmptyName)
+                        .setPositiveButton("OK", null)
+                        .show();
+                return;
+            }
+            Card card = null;
+            if(imageCard == null){
+                card = new Card(etNameCard.getText().toString().trim(), null, R.drawable.image);
+            }
+            else {
+                card = new Card(etNameCard.getText().toString().trim(), imageCardPath, null);
+            }
             Intent intent = new Intent();
-            Card card = new Card(etNameCard.getText().toString(), imageCardPath, null);
-          //  intent.putExtra("data", (Serializable) card);
             long id = CardDatabase.getInstance(AddCardActivity.this).cardDAO().insertCardReturnId(card);
             intent.putExtra("id", id);
-            System.out.println("ID before: " + id);
             setResult(CONSTANT.RESULT_ADD_CARD, intent);
            AddCardActivity.super.onBackPressed();
         });

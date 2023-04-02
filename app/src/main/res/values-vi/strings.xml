@@ -34,4 +34,8 @@
     <string name="language">Ngôn ngữ</string>
     <string name="vietnamese">Tiếng Việt</string>
     <string name="english">Tiếng Anh</string>
+
+    <string name="notification">Thông báo</string>
+    <string name="isEmptyName">Tên không được để trống</string>
+    <string name="isEmptyDescription">Mô tả không được để trống</string>
 </resources>

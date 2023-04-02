@@ -13,8 +13,6 @@ import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
-
     ImageButton githubButton, fbButton, proptitBtn;
     private ActionBar actionBar;
 
@@ -23,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i(TAG, "onCreate: ");
+
         actionBar = getSupportActionBar();
         actionBar.hide();
 
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     public void btnLogin_OnClick(View view) {
         Intent intent = new Intent(MainActivity.this, PlayActivity.class);
         startActivity(intent);
-        //Toast.makeText(MainActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+
     }
     void goToInternet(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);

@@ -26,4 +26,6 @@ public interface TopicDAO {
     void updateTopic(Topic topic);
     @Query("SELECT * FROM topic WHERE nameTopic LIKE '%' || :name || '%'")
     List<Topic>searchTopic(String name);
+    @Query("SELECT COUNT(*) FROM topic")
+    int countTopic();
 }

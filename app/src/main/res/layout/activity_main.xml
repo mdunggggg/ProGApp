@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".MainActivity">
     <ImageView
         android:id="@+id/imageProPtitView"
@@ -28,20 +29,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
         <ImageButton
             android:id="@+id/fbButton"
-            android:layout_marginStart="100dp"
             android:layout_width="@dimen/user_item_buttonSize"
             android:layout_height="@dimen/user_item_buttonSize"
             android:background="@color/white"
-            app:srcCompat="@drawable/ic_facebook" />
+            app:srcCompat="@drawable/facebook" />
         <ImageButton
             android:id="@+id/githubButton"
             android:layout_width="@dimen/user_item_buttonSize"
             android:layout_height="@dimen/user_item_buttonSize"
             android:background="@color/white"
-            app:srcCompat="@drawable/ic_github" />
+            app:srcCompat="@drawable/github" />
 
         <ImageButton
             android:id="@+id/proptitButton"

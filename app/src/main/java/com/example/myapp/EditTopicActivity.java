@@ -2,12 +2,14 @@ package com.example.myapp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -68,19 +70,32 @@ public class EditTopicActivity extends AppCompatActivity {
                     .start();
         });
         btnSaveTopic.setOnClickListener(v -> {
+            if(TextUtils.isEmpty(etEditNameTopic.getText().toString().trim())){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.notification)
+                        .setMessage(R.string.isEmptyName)
+                        .setPositiveButton("OK", null)
+                        .show();
+                return;
+            }
+            if(TextUtils.isEmpty(etEditDescriptionTopic.getText().toString().trim())){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.notification)
+                        .setMessage(R.string.isEmptyDescription)
+                        .setPositiveButton("OK", null)
+                        .show();
+                return;
+            }
             Intent intentEdit = new Intent(EditTopicActivity.this, PlayActivity.class);
-         //   Bundle bundleEdit = new Bundle();
             updateTopic();
-//            bundleEdit.putSerializable("Card", card);
-//            intentEdit.putExtras(bundleEdit);
             setResult(CONSTANT.RESULT_EDIT_TOPIC, intentEdit);
             EditTopicActivity.super.onBackPressed();
         });
 
     }
     public void updateTopic(){
-        topic.setNameTopic(etEditNameTopic.getText().toString());
-        topic.setDescribeTopic(etEditDescriptionTopic.getText().toString());
+        topic.setNameTopic(etEditNameTopic.getText().toString().trim());
+        topic.setDescribeTopic(etEditDescriptionTopic.getText().toString().trim());
         topic.setImageTopic(imageCardPath);
         TopicDatabase.getInstance(this).topicDAO().updateTopic(topic);
     }

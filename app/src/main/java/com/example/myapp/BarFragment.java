@@ -66,7 +66,6 @@ public class BarFragment extends Fragment{
 
     }
     void add(Card card){
-
         barAdapter.add(card);
     }
     void speak(){

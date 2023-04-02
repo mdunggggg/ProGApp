@@ -89,15 +89,12 @@ public class PlayActivity extends AppCompatActivity {
     private float screenHeight;
     private float screenWidth;
     private ActionBar actionBar;
-    private Drawable drawable;
     private SpannableString spannableString;
-    private Toolbar toolbar;
     private List<Topic> topics = new ArrayList<>();
     private TopicAdapter topicAdapter;
     private TextToSpeech textToSpeech;
     private RecyclerView recyclerView;
     private ImageButton btnAdd;
-    private LinearLayout frameLayout_container;
     private FrameLayout fragment_container;
     private ImageButton eraseBar;
     private ImageButton speakBar;
@@ -111,7 +108,6 @@ public class PlayActivity extends AppCompatActivity {
 
 
     // Bottom Sheet
-    private Button useBottomSheet;
     private LinearLayout layoutBottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
     private ImageButton btnBar;
@@ -154,9 +150,9 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
-        // Delete Data
-        TopicDatabase.getInstance(this).topicDAO().deleteAllTopic();
-        CardDatabase.getInstance(this).cardDAO().deleteAllCard();
+//        // Delete Data
+       // TopicDatabase.getInstance(this).topicDAO().deleteAllTopic();
+      //  CardDatabase.getInstance(this).cardDAO().deleteAllCard();
 
         // Create PopupWindow
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.animation_popup);
@@ -215,11 +211,9 @@ public class PlayActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.Vietnamese:
-                        Toast.makeText(PlayActivity.this, "Viet Name", Toast.LENGTH_SHORT).show();
                         changeLanguage("vi");
                         break;
                     case R.id.English:
-                        Toast.makeText(PlayActivity.this, "Englist", Toast.LENGTH_SHORT).show();
                         changeLanguage("en");
                         break;
                 }
@@ -238,8 +232,8 @@ public class PlayActivity extends AppCompatActivity {
         replaceFragment(barFragment);
 
 
-        // Original Data
-        dataInitialize();
+//        // Original Data
+//        dataInitialize();
 
         // Set adapter and Touch listener for recycler view
         recyclerView = findViewById(R.id.rcv_items);
@@ -247,13 +241,14 @@ public class PlayActivity extends AppCompatActivity {
                 new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(PlayActivity.this, "You clicked " + topics.get(position).getNameTopic(), Toast.LENGTH_LONG).show();
+                Toast.makeText(PlayActivity.this, topics.get(position).getNameTopic(), Toast.LENGTH_LONG).show();
                 speak(topics.get(position).getNameTopic());
                 goToShowCardActivity(topics.get(position));
 
             }
             @Override
             public void onLongItemClick(View view, int position) {
+                speak(topics.get(position).getNameTopic());
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
                 ImageView imageView = popupView.findViewById(R.id.imgTopic);
                 TextView textView = popupView.findViewById(R.id.nameTopic);
@@ -294,8 +289,10 @@ public class PlayActivity extends AppCompatActivity {
         recyclerView.setAdapter(topicAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        topics = TopicDatabase.getInstance(getApplicationContext()).topicDAO().getlistTopic();
-        topicAdapter.setData(topics);
+        if(TopicDatabase.getInstance(getApplicationContext()).topicDAO().countTopic() == 0){
+            dataInitialize();
+        }
+        setDataTopic();
 
         // Convert text to speech
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -304,9 +301,9 @@ public class PlayActivity extends AppCompatActivity {
                 if (status == TextToSpeech.SUCCESS) {
                     int result = textToSpeech.setLanguage(Locale.ENGLISH);
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                        //Toast.makeText(PlayActivity.this, "This language is not supported", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(PlayActivity.this, "This language is not supported", Toast.LENGTH_SHORT).show();
                     } else {
-                        //Toast.makeText(PlayActivity.this, "Succes", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(PlayActivity.this, "Success", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -411,7 +408,7 @@ public class PlayActivity extends AppCompatActivity {
     }
 
 
-    // Start Navigation
+    //Navigation
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -429,7 +426,7 @@ public class PlayActivity extends AppCompatActivity {
             super.onBackPressed();
     }
 
-    // End Navigation
+
 
 
     // Change Language
@@ -487,7 +484,6 @@ public class PlayActivity extends AppCompatActivity {
         List<Card> cards = new ArrayList<>();
 
 
-        CardDatabase.getInstance(getApplicationContext()).cardDAO().insertCard(new Card("Feelings", null, R.drawable.feelings));
         CardDatabase.getInstance(getApplicationContext()).cardDAO().insertCard(new Card("Feelings", null, R.drawable.feelings));
         CardDatabase.getInstance(getApplicationContext()).cardDAO().insertCard(new Card("Happy",null,  R.drawable.happy));
         CardDatabase.getInstance(getApplicationContext()).cardDAO().insertCard(new Card("Angry", null, R.drawable.angry));

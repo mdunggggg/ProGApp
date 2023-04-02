@@ -2,12 +2,14 @@ package com.example.myapp;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -66,6 +68,14 @@ public class EditCard extends AppCompatActivity {
         });
 
         btnSaveCard.setOnClickListener(v -> {
+            if(TextUtils.isEmpty(etEditNameCard.getText().toString().trim())){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.notification)
+                        .setMessage(R.string.isEmptyName)
+                        .setPositiveButton("OK", null)
+                        .show();
+                return;
+            }
             Intent intentEdit = new Intent(EditCard.this, ShowCard.class);
             Bundle bundleEdit = new Bundle();
             updateCard();
@@ -83,7 +93,7 @@ public class EditCard extends AppCompatActivity {
         imageCardPath = uri.getPath();
     }
     public void updateCard(){
-        card.setNameCard(etEditNameCard.getText().toString());
+        card.setNameCard(etEditNameCard.getText().toString().trim());
         card.setImageCard(imageCardPath);
         CardDatabase.getInstance(EditCard.this).cardDAO().updateCard(card);
     }

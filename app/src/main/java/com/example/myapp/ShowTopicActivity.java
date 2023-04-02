@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -38,6 +39,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -86,12 +88,10 @@ public class ShowTopicActivity extends AppCompatActivity {
     private List<Card> cardBar;
     private ImageButton eraseCardBar;
     private ImageButton speakCardBar;
-    private int position;
 
     private TextToSpeech textToSpeech;
 
     // Bottom Sheet
-    private Button useBottomSheet;
     private LinearLayout layoutBottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
     private ImageButton btnBar;
@@ -210,11 +210,10 @@ public class ShowTopicActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         Card card = CardDatabase.getInstance(ShowTopicActivity.this).cardDAO().getCardById(cardTopic.get(position));
-                        Toast.makeText(ShowTopicActivity.this, "You clicked " + card.getNameCard(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ShowTopicActivity.this, card.getNameCard(), Toast.LENGTH_LONG).show();
                         if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED){
                             speak(card.getNameCard());
                             barFragment.add(card);
-                            System.out.println(cardBar.size());
                         }
                         else{
                             speak(card.getNameCard());
@@ -225,6 +224,7 @@ public class ShowTopicActivity extends AppCompatActivity {
                     @Override
                     public void onLongItemClick(View view, int position) {
                         Card card = CardDatabase.getInstance(ShowTopicActivity.this).cardDAO().getCardById(cardTopic.get(position));
+                        speak(card.getNameCard());
                         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
                         ImageView imageView = popupView.findViewById(R.id.imgTopic);
                         TextView textView = popupView.findViewById(R.id.nameTopic);
@@ -441,12 +441,24 @@ public class ShowTopicActivity extends AppCompatActivity {
             setData();
             return;
         }
-        List<Card> cards = CardDatabase.getInstance(this).cardDAO().searchCard(search);
+        List<Integer> cards = topic.getCards();
         List<Integer> cardInteger = new ArrayList<>();
         for(int i = 0 ; i < cards.size(); i++){
-            cardInteger.add(cards.get(i).getId());
+            Card card = CardDatabase.getInstance(this).cardDAO().getCardById(cards.get(i));
+            if(card.getNameCard().toLowerCase().contains(search.toLowerCase())){
+                cardInteger.add(cards.get(i));
+            }
         }
         cardAdapter.setData(cardInteger);
+        hideKeyboard();
+    }
+    public void hideKeyboard(){
+        try{
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
 
