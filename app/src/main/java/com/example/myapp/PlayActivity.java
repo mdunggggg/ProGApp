@@ -344,10 +344,10 @@ public class PlayActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_MOVE:
                         float xDiff = event.getX();
                         float yDiff = event.getY();
-                        if (abs(xDiff) > 250 || abs(yDiff) > 250) {
+                        if (abs(xDiff) > CONSTANT.LIMIT_BUTTON_MOVE || abs(yDiff) > CONSTANT.LIMIT_BUTTON_MOVE) {
                             isMoving = true;
                         }
-                        System.out.println("Different: " + xDiff + " " + yDiff + " " + isMoving);
+
                         if (isMoving) {
                             float newX = btnAdd.getX() + (xDiff - xStart);
                             float newY = btnAdd.getY() + (yDiff - yStart);

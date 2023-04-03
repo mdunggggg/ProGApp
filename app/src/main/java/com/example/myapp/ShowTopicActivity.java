@@ -315,7 +315,7 @@ public class ShowTopicActivity extends AppCompatActivity {
                     case MotionEvent.ACTION_MOVE:
                         float xDiff = event.getX();
                         float yDiff = event.getY();
-                        if (abs(xDiff) > 150 || abs(yDiff) > 150) {
+                        if (abs(xDiff) > CONSTANT.LIMIT_BUTTON_MOVE || abs(yDiff) > CONSTANT.LIMIT_BUTTON_MOVE) {
                             isMoving = true;
                         }
                         if (isMoving) {
