@@ -262,6 +262,12 @@ public class PlayActivity extends AppCompatActivity {
                 delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        List<Integer>list = topics.get(position).getCards();
+                        Card card = null;
+                        for(int i = 0 ; i < list.size(); ++i){
+                            card = CardDatabase.getInstance(getApplicationContext()).cardDAO().getCardById(list.get(i));
+                            CardDatabase.getInstance(getApplicationContext()).cardDAO().deleteCard(card);
+                        }
                         TopicDatabase.getInstance(getApplicationContext()).topicDAO().deleteTopic(topics.get(position));
                         setDataTopic();
                         popupWindow.dismiss();

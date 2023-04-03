@@ -110,6 +110,7 @@ public class ShowTopicActivity extends AppCompatActivity {
                     long id = intent.getLongExtra("id", 0);
                     topic.addCard((int) id);
                     TopicDatabase.getInstance(this).topicDAO().updateTopic(topic);
+
                     setData();
                 }
                 else if(result.getResultCode() == CONSTANT.RESULT_SHOW_CARD){

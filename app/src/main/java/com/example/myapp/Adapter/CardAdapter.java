@@ -42,8 +42,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.TopicViewHolde
         if(card == null) return;
         if(card.getImageCard() != null)
             holder.imgView.setImageBitmap(BitmapFactory.decodeFile(card.getImageCard()));
-        else
+        else{
             holder.imgView.setImageResource(card.getIdImage());
+        }
+
         holder.tvName.setText(card.getNameCard());
 
     }

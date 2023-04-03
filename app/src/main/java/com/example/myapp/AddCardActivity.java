@@ -59,8 +59,9 @@ public class AddCardActivity extends AppCompatActivity {
                 return;
             }
             Card card = null;
-            if(imageCard == null){
+            if(imageCardPath == null){
                 card = new Card(etNameCard.getText().toString().trim(), null, R.drawable.image);
+
             }
             else {
                 card = new Card(etNameCard.getText().toString().trim(), imageCardPath, null);
